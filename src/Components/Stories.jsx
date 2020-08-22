@@ -5,8 +5,7 @@ export class Stories extends Component {
 	// we get the articles from the props
 	render() {
 		return (
-			<div>
-				<h1>hell oowlrd</h1>
+			<div className='flex flex-wrap  justify-center'>
 				{this.props.articles.map((el, idx) => (
 					<Story key={idx} {...el} />
 				))}
