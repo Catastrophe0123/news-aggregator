@@ -54,7 +54,9 @@ export class Home extends Component {
 	render() {
 		return (
 			<div>
-				<h1>hello world from home component</h1>
+				<h1 className='text-3xl font-medium font-serif flex justify-center w-full'>
+					Headlines
+				</h1>
 				{this.state.loading && <p>Loading...</p>}
 				{this.state.articles && (
 					<Stories articles={this.state.articles} />
