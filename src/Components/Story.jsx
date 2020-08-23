@@ -19,10 +19,14 @@ export class Story extends Component {
 								<a href={this.props.url}>{this.props.title}</a>
 							</h1>
 							<p className=' py-2 text-sm text-gray-700 '>
-								<Link
-									to={`/search?sources=${this.props.source.id}`}>
-									{this.props.source.name}
-								</Link>{' '}
+								{this.props.source.id ? (
+									<Link
+										to={`/search?sources=${this.props.source.id}`}>
+										{this.props.source.name}
+									</Link>
+								) : (
+									this.props.source.name
+								)}{' '}
 								&#183;{' '}
 								{dayjs(this.props.publishedAt).fromNow(true)}{' '}
 								ago

@@ -5,7 +5,13 @@ import Stories from '../Components/Stories';
 import Loading from '../Components/Loading';
 
 export class SearchResults extends Component {
-	state = { articles: [], totalResults: null, loading: true, search: null };
+	state = {
+		articles: [],
+		totalResults: null,
+		loading: true,
+		search: null,
+		showingSource: null,
+	};
 
 	componentDidMount = async () => {
 		// code
@@ -35,7 +41,7 @@ export class SearchResults extends Component {
 				loading: false,
 				paramString,
 				search: search,
-				// source: source,
+				sourceData: resp.data.sourceData,
 			});
 		} catch (err) {
 			console.log(err.response);
@@ -73,12 +79,25 @@ export class SearchResults extends Component {
 		return (
 			<div>
 				{this.state.loading && <Loading />}
+
 				{this.state.articles.length > 0 && (
 					<div>
-						<h1 className=' mt-3 text-3xl font-medium font-serif flex justify-center w-full'>
-							{this.state.search &&
-								this.state.search.toUpperCase()}
-						</h1>
+						{this.state.sourceData ? (
+							<div>
+								<h1 className=' mt-3 text-3xl font-medium font-serif flex justify-center w-full'>
+									{this.state.sourceData.name}
+								</h1>
+								<p className='text-center my-4 '>
+									{this.state.sourceData.description}
+								</p>
+							</div>
+						) : (
+							<h1 className=' mt-3 text-3xl font-medium font-serif flex justify-center w-full'>
+								{this.state.search &&
+									this.state.search.toUpperCase()}
+							</h1>
+						)}
+
 						<Stories articles={this.state.articles} />
 					</div>
 				)}
