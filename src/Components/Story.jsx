@@ -3,6 +3,7 @@ import dayjs from 'dayjs';
 import RelativeTime from 'dayjs/plugin/relativeTime';
 import Tag from './Tag';
 import '../styles/story.css';
+import { Link } from 'react-router-dom';
 
 export class Story extends Component {
 	render() {
@@ -18,7 +19,11 @@ export class Story extends Component {
 								<a href={this.props.url}>{this.props.title}</a>
 							</h1>
 							<p className=' py-2 text-sm text-gray-700 '>
-								{this.props.source.name} &#183;{' '}
+								<Link
+									to={`/search?sources=${this.props.source.id}`}>
+									{this.props.source.name}
+								</Link>{' '}
+								&#183;{' '}
 								{dayjs(this.props.publishedAt).fromNow(true)}{' '}
 								ago
 							</p>

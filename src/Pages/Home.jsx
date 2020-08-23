@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import '../styles/app.css';
 import Stories from '../Components/Stories';
 import axios from 'axios';
+import Loading from '../Components/Loading';
 
 export class Home extends Component {
 	state = { articles: null, totalResults: null, loading: true };
@@ -57,7 +58,7 @@ export class Home extends Component {
 				<h1 className=' mt-3 text-3xl font-medium font-serif flex justify-center w-full'>
 					Headlines
 				</h1>
-				{this.state.loading && <p>Loading...</p>}
+				{this.state.loading && <Loading />}
 				{this.state.articles && (
 					<Stories articles={this.state.articles} />
 				)}

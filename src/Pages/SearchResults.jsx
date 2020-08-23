@@ -5,7 +5,7 @@ import Stories from '../Components/Stories';
 import Loading from '../Components/Loading';
 
 export class SearchResults extends Component {
-	state = { articles: [], totalResults: null, loading: true, search: '' };
+	state = { articles: [], totalResults: null, loading: true, search: null };
 
 	componentDidMount = async () => {
 		// code
@@ -19,9 +19,15 @@ export class SearchResults extends Component {
 			console.log(params.toString());
 			console.log(params);
 			let search = params.get('q');
+			let source = params.get('sources');
+
 			// const resp = await Axios.get('/search', { params: { ...params } });
 			console.log('/search' + paramString);
 			const resp = await Axios.get('/search' + paramString);
+
+			if (source) {
+				search = source;
+			}
 
 			this.setState({
 				articles: resp.data.articles,
@@ -29,6 +35,7 @@ export class SearchResults extends Component {
 				loading: false,
 				paramString,
 				search: search,
+				// source: source,
 			});
 		} catch (err) {
 			console.log(err.response);
@@ -69,7 +76,8 @@ export class SearchResults extends Component {
 				{this.state.articles.length > 0 && (
 					<div>
 						<h1 className=' mt-3 text-3xl font-medium font-serif flex justify-center w-full'>
-							{this.state.search.toUpperCase()}
+							{this.state.search &&
+								this.state.search.toUpperCase()}
 						</h1>
 						<Stories articles={this.state.articles} />
 					</div>
