@@ -54,7 +54,7 @@ export class Home extends Component {
 	render() {
 		return (
 			<div>
-				<h1 className='text-3xl font-medium font-serif flex justify-center w-full'>
+				<h1 className=' mt-3 text-3xl font-medium font-serif flex justify-center w-full'>
 					Headlines
 				</h1>
 				{this.state.loading && <p>Loading...</p>}
