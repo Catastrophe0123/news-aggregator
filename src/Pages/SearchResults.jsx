@@ -3,6 +3,7 @@ import Axios from 'axios';
 
 import Stories from '../Components/Stories';
 import Loading from '../Components/Loading';
+import Button, { PaginationButton } from '../Components/PaginationButton';
 
 import { Link } from 'react-router-dom';
 
@@ -127,21 +128,40 @@ export class SearchResults extends Component {
 						)}
 
 						<Stories articles={this.state.articles} />
-						<div className='flex justify-center '>
-							<button
-								className='border p-5 bg-red-700'
-								disabled={prevDisabled}>
-								<Link to={prevDisabled ? '' : prevLink}>
-									Previous Page
-								</Link>
-							</button>
-							<button
-								className='border p-5 bg-red-700'
-								disabled={nextDisabled}>
-								<Link to={nextDisabled ? '' : nextLink}>
-									Next Page
-								</Link>
-							</button>
+						<div className='flex justify-center my-5 m-3  w-full'>
+							{prevDisabled ? (
+								<div className=' flex justify-end px-3 w-full max-w-4xl'>
+									<Link to={nextDisabled ? '' : nextLink}>
+										<PaginationButton
+											direction='right'
+											disabled={nextDisabled}>
+											Next Page
+										</PaginationButton>
+									</Link>
+								</div>
+							) : (
+								<div className=' flex justify-between px-3 w-full max-w-4xl'>
+									{!prevDisabled && (
+										<Link to={prevDisabled ? '' : prevLink}>
+											<PaginationButton
+												direction='left'
+												disabled={prevDisabled}>
+												Previous Page
+											</PaginationButton>
+										</Link>
+									)}
+
+									{!nextDisabled && (
+										<Link to={nextDisabled ? '' : nextLink}>
+											<PaginationButton
+												direction='right'
+												disabled={nextDisabled}>
+												Next Page
+											</PaginationButton>
+										</Link>
+									)}
+								</div>
+							)}
 						</div>
 					</div>
 				)}

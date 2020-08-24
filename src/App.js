@@ -14,6 +14,7 @@ function App() {
 				<Route component={Navbar} />
 				<div className='container mx-auto px-2'>
 					<Route exact path='/' component={Home} />
+					<Route exact path='/headlines' component={Home} />
 					<Route exact path='/search' component={SearchResults} />
 				</div>
 			</Router>
