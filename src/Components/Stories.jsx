@@ -3,6 +3,7 @@ import Story from './Story';
 
 export class Stories extends Component {
 	// we get the articles from the props
+
 	render() {
 		return (
 			<div className='flex flex-wrap  justify-center'>

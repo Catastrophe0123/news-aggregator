@@ -4,13 +4,23 @@ import RelativeTime from 'dayjs/plugin/relativeTime';
 import Tag from './Tag';
 import '../styles/story.css';
 import { Link } from 'react-router-dom';
+import ActionPanel from './ActionPanel';
 
 export class Story extends Component {
+	state = { isHovering: false };
+
 	render() {
 		dayjs.extend(RelativeTime);
 		return (
 			<div className='m-3 max-w-4xl w-full'>
-				<div className='border rounded-lg border-gray-500 shadow-md hover:shadow-lg p-5'>
+				<div
+					onMouseEnter={(e) => {
+						this.setState({ isHovering: true });
+					}}
+					onMouseLeave={(e) => {
+						this.setState({ isHovering: false });
+					}}
+					className='border rounded-lg border-gray-500 shadow-md hover:shadow-lg p-5'>
 					<div
 						// className='flex justify-between '
 						className='custom-grid '>
@@ -29,7 +39,13 @@ export class Story extends Component {
 								)}{' '}
 								&#183;{' '}
 								{dayjs(this.props.publishedAt).fromNow(true)}{' '}
-								ago
+								ago{' '}
+								{this.state.isHovering && (
+									<ActionPanel
+										userCopied={this.userCopied}
+										articleURL={this.props.url}
+									/>
+								)}
 							</p>
 							{this.props.description !== '' ? (
 								<p className='font-sans'>
