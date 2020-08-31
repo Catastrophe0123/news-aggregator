@@ -74,8 +74,8 @@ export class CategoryPage extends Component {
 		let nextPage = this.state.currentPage + 1;
 		let prevPage = this.state.currentPage - 1;
 		let nextLink, prevLink;
-		nextLink = `/headlines?category=${this.state.search}&page=${nextPage}`;
-		prevLink = `/headlines?category=${this.state.search}&page=${prevPage}`;
+		nextLink = `/topics?category=${this.state.search}&page=${nextPage}`;
+		prevLink = `/topics?category=${this.state.search}&page=${prevPage}`;
 
 		return (
 			<div>

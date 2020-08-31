@@ -17,6 +17,8 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import SearchBar from './SearchBar';
+import SideBar from './SideBar';
+import { Component } from 'react';
 
 export default function Navbar({ fixed, ...props }) {
 	const [navbarOpen, setNavbarOpen] = React.useState(false);
@@ -81,7 +83,7 @@ export default function Navbar({ fixed, ...props }) {
 
 		<nav className='relative shadow-lg h-20 navbar-expand-lg bg-gray-100 '>
 			<div className=' h-full flex flex-wrap items-center justify-between container mx-auto px-4 '>
-				<div>
+				<div className='w-40'>
 					<Link
 						to='/'
 						className='text-sm text-black font-bold leading-relaxed  mr-4  whitespace-no-wrap uppercase'
@@ -92,9 +94,15 @@ export default function Navbar({ fixed, ...props }) {
 				<div className='w-full pt-2 max-w-2xl '>
 					<SearchBar history={props.history} />
 				</div>
-				<button className='border font-medium font-sans bg-blue-500 text-white px-5  py-3 rounded-md  '>
-					Sign in
-				</button>
+				{props.authenticated ? (
+					<button>{props.email}</button>
+				) : (
+					<button
+						onClick={props.onLoginClickHandler}
+						className='border font-medium font-sans bg-blue-500 text-white px-5  py-3 rounded-md  '>
+						Sign in
+					</button>
+				)}
 			</div>
 		</nav>
 	);
