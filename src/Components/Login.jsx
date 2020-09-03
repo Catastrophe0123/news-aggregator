@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import Axios from 'axios';
+import Axios from '../utils/axiosInstance';
 
 export class Login extends Component {
 	state = { isLoggingIn: true, email: '', password: '', errors: null };
@@ -21,8 +21,10 @@ export class Login extends Component {
 			let resp = await Axios.post('/login', { email, password });
 			console.log(resp.data);
 			let token = resp.data.token;
+			let { bookmarks } = resp.data.user;
+			let mail = resp.data.user.email;
 			this.setState({ errors: null }, () => {
-				this.props.loginSuccessHandler(token, email);
+				this.props.loginSuccessHandler(token, mail, bookmarks);
 			});
 
 			console.log('login successful');
@@ -38,8 +40,10 @@ export class Login extends Component {
 			let resp = await Axios.post('/signup', { email, password });
 			console.log(resp.data);
 			let token = resp.data.token;
+			let { bookmarks } = resp.data.user;
+			let mail = resp.data.user.email;
 			this.setState({ errors: null }, () => {
-				this.props.loginSuccessHandler(token, email);
+				this.props.loginSuccessHandler(token, mail, bookmarks);
 			});
 			console.log('signup successful');
 		} catch (err) {

@@ -8,7 +8,13 @@ export class Stories extends Component {
 		return (
 			<div className='flex flex-wrap  justify-center'>
 				{this.props.articles.map((el, idx) => (
-					<Story key={idx} {...el} />
+					<Story
+						bookmarkURLS={this.props.bookmarkURLS}
+						bookmarked={this.props.bookmarkURLS.includes(el.url)}
+						refreshUser={this.props.refreshUser}
+						key={idx}
+						{...el}
+					/>
 				))}
 			</div>
 		);

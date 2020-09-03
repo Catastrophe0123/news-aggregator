@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import Axios from 'axios';
+import Axios from '../utils/axiosInstance';
 
 import Stories from '../Components/Stories';
 import Loading from '../Components/Loading';
@@ -99,7 +99,11 @@ export class CategoryPage extends Component {
 							</h1>
 						)}
 
-						<Stories articles={this.state.articles} />
+						<Stories
+							bookmarkURLS={this.props.bookmarkURLS}
+							refreshUser={this.props.refreshUser}
+							articles={this.state.articles}
+						/>
 						<div className='flex justify-center my-5 m-3  w-full'>
 							{prevDisabled ? (
 								<div className=' flex justify-end px-3 w-full max-w-4xl'>

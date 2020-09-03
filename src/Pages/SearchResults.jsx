@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import Axios from 'axios';
+import Axios from '../utils/axiosInstance';
 
 import Stories from '../Components/Stories';
 import Loading from '../Components/Loading';
@@ -53,12 +53,15 @@ export class SearchResults extends Component {
 	};
 
 	componentDidMount = async () => {
+		console.log('here?');
+		console.log('state : ', this.state);
 		await this.getData();
 	};
 
 	componentDidUpdate = async (prevProps, prevState) => {
 		let paramString = this.props.location.search;
 		if (prevProps.location.search != paramString) {
+			console.log('im running over ghere');
 			this.setState({
 				loading: true,
 				paramString: paramString,
@@ -66,26 +69,6 @@ export class SearchResults extends Component {
 			});
 
 			await this.getData();
-
-			// try {
-			// 	const resp = await Axios.get('/search' + paramString);
-			// 	let params = new URLSearchParams(paramString);
-			// 	let search = params.get('q');
-			// 	let source = params.get('sources');
-			// 	let currentPage = Number(params.get('page'));
-			// 	if (!currentPage) currentPage = 1;
-			// 	this.setState({
-			// 		articles: resp.data.articles,
-			// 		totalResults: resp.data.totalResults,
-			// 		loading: false,
-			// 		search,
-			// 		source,
-			// 		sourceData: resp.data.sourceData,
-			// 		currentPage,
-			// 	});
-			// } catch (err) {
-			// 	console.log(err.response);
-			// }
 		}
 	};
 
@@ -127,7 +110,11 @@ export class SearchResults extends Component {
 							</h1>
 						)}
 
-						<Stories articles={this.state.articles} />
+						<Stories
+							bookmarkURLS={this.props.bookmarkURLS}
+							refreshUser={this.props.refreshUser}
+							articles={this.state.articles}
+						/>
 						<div className='flex justify-center my-5 m-3  w-full'>
 							{prevDisabled ? (
 								<div className=' flex justify-end px-3 w-full max-w-4xl'>

@@ -11,7 +11,7 @@ import CategoryPage from './Pages/CategoryPage';
 import Login from './Components/Login';
 import Modal from './Components/Modal';
 import BackDrop from './Components/BackDrop';
-import Axios from 'axios';
+import Axios from './utils/axiosInstance';
 import JwtDecode from 'jwt-decode';
 
 // const mql = window.matchMedia(`(min-width: 800px)`);
@@ -22,6 +22,25 @@ class App extends React.Component {
 		authenticated: false,
 		email: null,
 		token: null,
+		bookmarks: [],
+		bookmarkURLS: [],
+	};
+
+	// checkBookmarks = (data) => {
+	// 	for (const {url} of data) {
+	// 		if(this.state.bookmarks.includes(url)){
+
+	// 		}
+	// 	}
+	// }
+
+	refreshUser = (bookmarks) => {
+		let urls = [];
+		for (const i of bookmarks) {
+			urls.push(i.url);
+		}
+		localStorage.setItem('bookmarks', JSON.stringify(bookmarks));
+		this.setState({ bookmarks: bookmarks, bookmarkURLS: urls });
 	};
 
 	setTokenTimer = (time) => () => {
@@ -43,7 +62,9 @@ class App extends React.Component {
 	componentDidMount = () => {
 		let email = localStorage.email;
 		let token = localStorage.token;
-
+		let bookmarks = localStorage.bookmarks;
+		if (bookmarks) bookmarks = JSON.parse(bookmarks);
+		console.log(bookmarks);
 		let authenticated = false;
 		if (token && email) {
 			const decodedToken = JwtDecode(token);
@@ -58,8 +79,19 @@ class App extends React.Component {
 				this.setTokenTimer(milliseconds);
 				authenticated = true;
 
-				Axios.defaults.headers['Authorization'] = token;
-				this.setState({ authenticated, email, token });
+				Axios.defaults.headers.common['Authorization'] = token;
+				let urls = [];
+				for (const i of bookmarks) {
+					urls.push(i.url);
+				}
+
+				this.setState({
+					authenticated,
+					email,
+					token,
+					bookmarks,
+					bookmarkURLS: urls,
+				});
 				console.log('authenicated boi');
 			}
 		}
@@ -79,16 +111,18 @@ class App extends React.Component {
 		});
 	};
 
-	loginSuccessHandler = (token, email) => {
+	loginSuccessHandler = (token, email, bookmarks = []) => {
 		localStorage.setItem('token', token);
 		localStorage.setItem('email', email);
-		Axios.defaults.headers['Authorization'] = token;
+		localStorage.setItem('bookmarks', JSON.stringify(bookmarks));
+		Axios.defaults.headers.common['Authorization'] = token;
 		this.setState({
 			showModal: false,
 			authenticated: true,
 			email: email,
 			token: token,
 		});
+		this.refreshUser(bookmarks);
 		console.log('authenticated');
 	};
 
@@ -130,17 +164,49 @@ class App extends React.Component {
 
 					<div className='container mx-auto px-2'>
 						<Switch>
-							<Route exact path='/' component={Home} />
-							<Route exact path='/headlines' component={Home} />
+							<Route
+								exact
+								path='/'
+								component={(props) => (
+									<Home
+										{...props}
+										bookmarkURLS={this.state.bookmarkURLS}
+										refreshUser={this.refreshUser}
+									/>
+								)}
+							/>
+							<Route
+								exact
+								path='/headlines'
+								component={(props) => (
+									<Home
+										{...props}
+										bookmarkURLS={this.state.bookmarkURLS}
+										refreshUser={this.refreshUser}
+									/>
+								)}
+							/>
 							<Route
 								exact
 								path='/search'
-								component={SearchResults}
+								component={(props) => (
+									<SearchResults
+										{...props}
+										bookmarkURLS={this.state.bookmarkURLS}
+										refreshUser={this.refreshUser}
+									/>
+								)}
 							/>
 							<Route
 								exact
 								path='/topics'
-								component={CategoryPage}
+								component={(props) => (
+									<CategoryPage
+										{...props}
+										bookmarkURLS={this.state.bookmarkURLS}
+										refreshUser={this.refreshUser}
+									/>
+								)}
 							/>
 						</Switch>
 					</div>

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import '../styles/app.css';
 import Stories from '../Components/Stories';
-import axios from 'axios';
+import axios from '../utils/axiosInstance';
 import Loading from '../Components/Loading';
 import { Link } from 'react-router-dom';
 
@@ -114,7 +114,11 @@ export class Home extends Component {
 				{this.state.loading && <Loading />}
 				{this.state.articles && (
 					<div>
-						<Stories articles={this.state.articles} />
+						<Stories
+							bookmarkURLS={this.props.bookmarkURLS}
+							refreshUser={this.props.refreshUser}
+							articles={this.state.articles}
+						/>
 						<div className='flex justify-center my-5 m-3  w-full'>
 							{prevDisabled ? (
 								<div className=' flex justify-end px-3 w-full max-w-4xl'>

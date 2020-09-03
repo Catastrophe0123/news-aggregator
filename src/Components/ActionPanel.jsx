@@ -10,13 +10,16 @@ export class ActionPanel extends Component {
 	};
 
 	render() {
+		let bookmarkclasses = this.props.bookmarked
+			? 'fas px-2 fa-bookmark text-blue-600'
+			: 'far px-2 fa-bookmark';
 		return (
 			<span className='mx-2'>
 				<span
 					style={{ transition: 'color 0.1s ease-in' }}
 					onClick={this.props.onBookmarkHandler}
 					className='cursor-pointer mx-2 '>
-					<i className='far px-2 fa-bookmark  '></i>
+					<i className={bookmarkclasses}></i>
 				</span>
 				<span onClick={this.copyLink} className='cursor-pointer      '>
 					<i

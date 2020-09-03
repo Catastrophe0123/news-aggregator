@@ -5,9 +5,23 @@ import Tag from './Tag';
 import '../styles/story.css';
 import { Link } from 'react-router-dom';
 import ActionPanel from './ActionPanel';
+import Axios from '../utils/axiosInstance';
 
 export class Story extends Component {
 	state = { isHovering: false };
+
+	onBookmarkHandler = async () => {
+		try {
+			let resp = await Axios.post('/bookmark', { ...this.props });
+			console.log(resp.data);
+			let bookmarks = resp.data.userdata.bookmarks;
+			console.log('yoyoyo : ', bookmarks);
+			this.props.refreshUser(bookmarks);
+		} catch (err) {
+			console.log('error');
+			console.log(err.response);
+		}
+	};
 
 	render() {
 		dayjs.extend(RelativeTime);
@@ -26,7 +40,9 @@ export class Story extends Component {
 						className='custom-grid '>
 						<div>
 							<h1 className='  text-lg font-bold hover:underline '>
-								<a href={this.props.url}>{this.props.title}</a>
+								<a target='_blank' href={this.props.url}>
+									{this.props.title}
+								</a>
 							</h1>
 							<p className=' py-2 text-sm text-gray-700 '>
 								{this.props.source.id ? (
@@ -42,6 +58,10 @@ export class Story extends Component {
 								ago{' '}
 								{this.state.isHovering && (
 									<ActionPanel
+										bookmarked={this.props.bookmarked}
+										onBookmarkHandler={
+											this.onBookmarkHandler
+										}
 										userCopied={this.userCopied}
 										articleURL={this.props.url}
 									/>
