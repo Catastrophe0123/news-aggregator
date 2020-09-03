@@ -62,8 +62,18 @@ export class Story extends Component {
 										onBookmarkHandler={
 											this.onBookmarkHandler
 										}
+										goToSourceHandler={
+											this.goToSourceHandler
+										}
+										hideStoryHandler={
+											this.props.hideStoryHandler
+										}
+										storyId={this.props.idkey}
+										sourceId={this.props.source.id}
+										sourceName={this.props.source.name}
 										userCopied={this.userCopied}
 										articleURL={this.props.url}
+										removeSourceHandler={() => {}}
 									/>
 								)}
 							</p>

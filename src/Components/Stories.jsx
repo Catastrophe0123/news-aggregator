@@ -4,18 +4,40 @@ import Story from './Story';
 export class Stories extends Component {
 	// we get the articles from the props
 
+	state = { articles: null };
+
+	hideStoryHandler = (id) => {
+		this.setState((st) => {
+			let x = [...st.articles];
+			x.splice(id, 1);
+			return { ...st, articles: x };
+		});
+	};
+
+	componentDidMount = () => {
+		this.setState({ articles: this.props.articles });
+	};
+
 	render() {
 		return (
-			<div className='flex flex-wrap  justify-center'>
-				{this.props.articles.map((el, idx) => (
-					<Story
-						bookmarkURLS={this.props.bookmarkURLS}
-						bookmarked={this.props.bookmarkURLS.includes(el.url)}
-						refreshUser={this.props.refreshUser}
-						key={idx}
-						{...el}
-					/>
-				))}
+			<div>
+				{this.state.articles && (
+					<div className='flex flex-wrap  justify-center'>
+						{this.state.articles.map((el, idx) => (
+							<Story
+								hideStoryHandler={this.hideStoryHandler}
+								bookmarkURLS={this.props.bookmarkURLS}
+								bookmarked={this.props.bookmarkURLS.includes(
+									el.url
+								)}
+								refreshUser={this.props.refreshUser}
+								key={idx}
+								idkey={idx}
+								{...el}
+							/>
+						))}
+					</div>
+				)}
 			</div>
 		);
 	}
