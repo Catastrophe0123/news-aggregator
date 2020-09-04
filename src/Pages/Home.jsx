@@ -6,6 +6,7 @@ import Loading from '../Components/Loading';
 import { Link } from 'react-router-dom';
 
 import PaginationButton from '../Components/PaginationButton';
+import HorizontalTabs from '../Components/HorizontalTabs';
 
 export class Home extends Component {
 	state = {
@@ -111,6 +112,8 @@ export class Home extends Component {
 				<h1 className=' mt-3 text-3xl font-medium font-serif flex justify-center w-full'>
 					Headlines
 				</h1>
+				{/* <HorizontalTabs /> */}
+
 				{this.state.loading && <Loading />}
 				{this.state.articles && (
 					<div>

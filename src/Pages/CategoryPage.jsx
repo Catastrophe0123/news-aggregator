@@ -6,6 +6,7 @@ import Loading from '../Components/Loading';
 import Button, { PaginationButton } from '../Components/PaginationButton';
 
 import { Link } from 'react-router-dom';
+import HorizontalTabs from '../Components/HorizontalTabs';
 
 export class CategoryPage extends Component {
 	state = {
@@ -13,10 +14,69 @@ export class CategoryPage extends Component {
 		totalResults: null,
 		loading: true,
 		search: null,
-		source: null,
 		currentPage: 1,
 		totalPages: null,
+		currentTopic: 'Latest',
+		loadingSubTopic: false,
+		subtopicList: null,
 	};
+
+	businessSubTopics = [
+		{ name: 'Latest' },
+		{ name: 'Economy' },
+		{ name: 'Markets' },
+		{ name: 'Jobs' },
+		{ name: 'Personal Finance' },
+		{ name: 'Entrepreneurship' },
+	];
+
+	technologySubTopics = [
+		{ name: 'Latest' },
+		{ name: 'Mobile' },
+		{ name: 'Gadgets' },
+		{ name: 'Internet' },
+		{ name: 'Artificial Intelligence' },
+		{ name: 'Virtual Reality' },
+	];
+
+	entertainmentSubTopics = [
+		{ name: 'Latest' },
+		{ name: 'Movies' },
+		{ name: 'Music' },
+		{ name: 'TV' },
+		{ name: 'Books' },
+		{ name: 'Art' },
+		{ name: 'Celebrities' },
+	];
+
+	sportsSubTopics = [
+		{ name: 'Latest' },
+		{ name: 'Cricket' },
+		{ name: 'Hockey' },
+		{ name: 'Tennis' },
+		{ name: 'Football' },
+		{ name: 'Badminton' },
+		{ name: 'Basketball' },
+	];
+
+	scienceSubTopics = [
+		{ name: 'Latest' },
+		{ name: 'Environment' },
+		{ name: 'Outer Space' },
+		{ name: 'Physics' },
+		{ name: 'Genetics' },
+		{ name: 'Wildlife' },
+		{ name: 'Genetics' },
+	];
+
+	healthSubTopics = [
+		{ name: 'Latest' },
+		{ name: 'Medicine' },
+		{ name: 'Healthcare' },
+		{ name: 'Mental health' },
+		{ name: 'Nutrition' },
+		{ name: 'Fitness' },
+	];
 
 	getData = async () => {
 		try {
@@ -50,12 +110,29 @@ export class CategoryPage extends Component {
 	};
 
 	componentDidMount = async () => {
+		let paramString = this.props.location.search;
+
+		let params = new URLSearchParams(paramString);
+		console.log(params);
+		console.log(params.toString());
+		console.log(params);
+		let search = params.get('category');
+
+		// switch (search) {
+		// 	case 'business':
+		// 		this.setState({ subtopicList: businessSubTopics });
+		// 		break;
+		// 	case "technology":
+		// 		this.setState({subtopicList: technologySubTopics})
+		// }
+
 		await this.getData();
 	};
 
 	componentDidUpdate = async (prevProps, prevState) => {
 		let paramString = this.props.location.search;
 		if (prevProps.location.search != paramString) {
+			console.log('im rinngin?');
 			this.setState({
 				loading: true,
 				paramString: paramString,
@@ -63,6 +140,33 @@ export class CategoryPage extends Component {
 			});
 
 			await this.getData();
+		}
+	};
+
+	changeTopic = async (topic) => {
+		this.setState({
+			currentTopic: topic,
+			loadingSubTopic: true,
+		});
+		// fetch the data and store in the state
+
+		try {
+			const resp = await Axios.get('/search', {
+				params: { sortBy: 'publishedAt', q: topic },
+			});
+			console.log('over here');
+			console.log(resp);
+			let totalPages = Math.ceil(resp.data.totalResults / 20);
+			this.setState({
+				articles: resp.data.articles,
+				totalResults: resp.data.totalResults,
+				loadingSubTopic: false,
+				// search: search,
+				// currentPage: page,
+				totalPages,
+			});
+		} catch (err) {
+			console.log(err.response);
 		}
 	};
 
@@ -98,47 +202,70 @@ export class CategoryPage extends Component {
 									this.state.search.toUpperCase()}
 							</h1>
 						)}
-
-						<Stories
-							bookmarkURLS={this.props.bookmarkURLS}
-							refreshUser={this.props.refreshUser}
-							articles={this.state.articles}
+						<HorizontalTabs
+							changeTopic={this.changeTopic}
+							// list={this.businessSubTopics}
+							list={this[`${this.state.search}SubTopics`]}
 						/>
-						<div className='flex justify-center my-5 m-3  w-full'>
-							{prevDisabled ? (
-								<div className=' flex justify-end px-3 w-full max-w-4xl'>
-									<Link to={nextDisabled ? '' : nextLink}>
-										<PaginationButton
-											direction='right'
-											disabled={nextDisabled}>
-											Next Page
-										</PaginationButton>
-									</Link>
-								</div>
-							) : (
-								<div className=' flex justify-between px-3 w-full max-w-4xl'>
-									{!prevDisabled && (
-										<Link to={prevDisabled ? '' : prevLink}>
-											<PaginationButton
-												direction='left'
-												disabled={prevDisabled}>
-												Previous Page
-											</PaginationButton>
-										</Link>
-									)}
+						{!this.state.loadingSubTopic ? (
+							<div>
+								<Stories
+									bookmarkURLS={this.props.bookmarkURLS}
+									refreshUser={this.props.refreshUser}
+									articles={this.state.articles}
+								/>
+								<div className='flex justify-center my-5 m-3  w-full'>
+									{prevDisabled ? (
+										<div className=' flex justify-end px-3 w-full max-w-4xl'>
+											<Link
+												to={
+													nextDisabled ? '' : nextLink
+												}>
+												<PaginationButton
+													direction='right'
+													disabled={nextDisabled}>
+													Next Page
+												</PaginationButton>
+											</Link>
+										</div>
+									) : (
+										<div className=' flex justify-between px-3 w-full max-w-4xl'>
+											{!prevDisabled && (
+												<Link
+													to={
+														prevDisabled
+															? ''
+															: prevLink
+													}>
+													<PaginationButton
+														direction='left'
+														disabled={prevDisabled}>
+														Previous Page
+													</PaginationButton>
+												</Link>
+											)}
 
-									{!nextDisabled && (
-										<Link to={nextDisabled ? '' : nextLink}>
-											<PaginationButton
-												direction='right'
-												disabled={nextDisabled}>
-												Next Page
-											</PaginationButton>
-										</Link>
+											{!nextDisabled && (
+												<Link
+													to={
+														nextDisabled
+															? ''
+															: nextLink
+													}>
+													<PaginationButton
+														direction='right'
+														disabled={nextDisabled}>
+														Next Page
+													</PaginationButton>
+												</Link>
+											)}
+										</div>
 									)}
 								</div>
-							)}
-						</div>
+							</div>
+						) : (
+							<Loading />
+						)}
 					</div>
 				)}
 			</div>

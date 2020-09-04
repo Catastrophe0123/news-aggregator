@@ -14,16 +14,16 @@ export class Stories extends Component {
 		});
 	};
 
-	componentDidMount = () => {
-		this.setState({ articles: this.props.articles });
-	};
+	// componentDidMount = () => {
+	// 	this.setState({ articles: this.props.articles });
+	// };
 
 	render() {
 		return (
 			<div>
-				{this.state.articles && (
+				{this.props.articles && (
 					<div className='flex flex-wrap  justify-center'>
-						{this.state.articles.map((el, idx) => (
+						{this.props.articles.map((el, idx) => (
 							<Story
 								hideStoryHandler={this.hideStoryHandler}
 								bookmarkURLS={this.props.bookmarkURLS}

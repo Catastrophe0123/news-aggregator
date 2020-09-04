@@ -42,6 +42,12 @@ class SideBar extends React.Component {
 					{' '}
 					<i class='fas fa-microchip'></i>Technology
 				</NavLink>
+				{this.props.isAuthenticated && (
+					<button onClick={this.props.onLogoutHandler}>
+						{' '}
+						<i class='fas fa-microchip'></i>Logout
+					</button>
+				)}
 			</Menu>
 		);
 	}

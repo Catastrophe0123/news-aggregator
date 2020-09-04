@@ -159,7 +159,10 @@ class App extends React.Component {
 							/>
 						)}
 					/>
-					<SideBar />
+					<SideBar
+						isAuthenticated={this.state.authenticated}
+						onLogoutHandler={this.logout}
+					/>
 					<Route path='/login' component={Login} />
 
 					<div className='container mx-auto px-2'>

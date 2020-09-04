@@ -20,7 +20,7 @@ export class ActionPanel extends Component {
 		this.props.history.push(`/search?sources=${source}`);
 	};
 
-	onSelect = ({ key }) => {
+	onSelect = ({ key, ...x }) => {
 		switch (key) {
 			case '0':
 				this.props.hideStoryHandler(this.props.storyId);
@@ -41,7 +41,7 @@ export class ActionPanel extends Component {
 		console.log(visible);
 	};
 
-	menu = (
+	menu = () => (
 		<Menu onSelect={this.onSelect}>
 			<MenuItem key='0'>
 				<span className=' cursor-pointer text-base'>
