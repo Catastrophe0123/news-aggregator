@@ -95,6 +95,15 @@ export class Home extends Component {
 			await this.fetchHeadlines();
 		}
 	};
+
+	hideStoryHandler = (id) => {
+		this.setState((st) => {
+			let x = [...st.articles];
+			x.splice(id, 1);
+			return { ...st, articles: x };
+		});
+	};
+
 	render() {
 		let [prevDisabled, nextDisabled] = [false, false];
 		if (this.state.currentPage >= this.state.totalPages)
@@ -118,6 +127,7 @@ export class Home extends Component {
 				{this.state.articles && (
 					<div>
 						<Stories
+							hideStoryHandler={this.hideStoryHandler}
 							bookmarkURLS={this.props.bookmarkURLS}
 							refreshUser={this.props.refreshUser}
 							articles={this.state.articles}

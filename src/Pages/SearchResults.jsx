@@ -72,6 +72,14 @@ export class SearchResults extends Component {
 		}
 	};
 
+	hideStoryHandler = (id) => {
+		this.setState((st) => {
+			let x = [...st.articles];
+			x.splice(id, 1);
+			return { ...st, articles: x };
+		});
+	};
+
 	render() {
 		let [prevDisabled, nextDisabled] = [false, false];
 		if (this.state.currentPage >= this.state.totalPages)
@@ -111,6 +119,7 @@ export class SearchResults extends Component {
 						)}
 
 						<Stories
+							hideStoryHandler={this.hideStoryHandler}
 							bookmarkURLS={this.props.bookmarkURLS}
 							refreshUser={this.props.refreshUser}
 							articles={this.state.articles}

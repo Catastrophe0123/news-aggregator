@@ -86,11 +86,13 @@ export class Story extends Component {
 									{this.props.content}
 								</p>
 							)}
-							<div className='flex flex-wrap mt-3 '>
-								{this.props.tags.map((tag) => (
-									<Tag tagname={tag} />
-								))}
-							</div>
+							{this.props.tags && (
+								<div className='flex flex-wrap mt-3 '>
+									{this.props.tags.map((tag) => (
+										<Tag tagname={tag} />
+									))}
+								</div>
+							)}
 						</div>
 						<img
 							style={{ width: '100px', height: '100px' }}
