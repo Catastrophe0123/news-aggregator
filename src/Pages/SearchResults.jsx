@@ -16,6 +16,7 @@ export class SearchResults extends Component {
 		source: null,
 		currentPage: 1,
 		totalPages: null,
+		buttonText: '',
 	};
 
 	getData = async () => {
@@ -34,18 +35,21 @@ export class SearchResults extends Component {
 			if (!page) page = 1;
 			// const resp = await Axios.get('/search', { params: { ...params } });
 			console.log('/search' + paramString);
+
 			const resp = await Axios.get('/search' + paramString);
-			let totalPages = Math.ceil(resp.data.totalResults / 20);
+			let qwe = resp.data.data;
+			let totalPages = Math.ceil(qwe.totalResults / 20);
 			this.setState({
-				articles: resp.data.articles,
-				totalResults: resp.data.totalResults,
+				articles: qwe.articles,
+				totalResults: qwe.totalResults,
 				loading: false,
 				paramString,
 				search: search,
 				source: source,
-				sourceData: resp.data.sourceData,
+				sourceData: qwe.sourceData,
 				currentPage: page,
 				totalPages,
+				buttonText: resp.data.isSaved ? 'Saved' : 'Save',
 			});
 		} catch (err) {
 			console.log(err.response);
@@ -53,8 +57,6 @@ export class SearchResults extends Component {
 	};
 
 	componentDidMount = async () => {
-		console.log('here?');
-		console.log('state : ', this.state);
 		await this.getData();
 	};
 
@@ -80,6 +82,27 @@ export class SearchResults extends Component {
 		});
 	};
 
+	onSaveSearchHandler = async () => {
+		// code
+		try {
+			console.log('hereoiqwjn');
+			let resp = await Axios.post('/search/save', {
+				searchString: this.state.search,
+			});
+			console.log(resp);
+			if (resp.status === 200) {
+				// unsave
+				//change button text to Save
+				this.setState({ buttonText: 'Save' });
+			} else {
+				// save
+				// change button text to Saved
+				this.setState({ buttonText: 'Saved' });
+			}
+		} catch (err) {
+			console.log(err);
+		}
+	};
 	render() {
 		let [prevDisabled, nextDisabled] = [false, false];
 		if (this.state.currentPage >= this.state.totalPages)
@@ -112,10 +135,17 @@ export class SearchResults extends Component {
 								</p>
 							</div>
 						) : (
-							<h1 className=' mt-3 text-3xl font-medium font-serif flex justify-center w-full'>
-								{this.state.search &&
-									this.state.search.toUpperCase()}
-							</h1>
+							<div>
+								<h1 className=' mt-3 text-3xl font-medium font-serif flex justify-center w-full'>
+									{this.state.search &&
+										this.state.search.toUpperCase()}
+								</h1>
+								<button
+									className=''
+									onClick={this.onSaveSearchHandler}>
+									{this.state.buttonText}
+								</button>
+							</div>
 						)}
 
 						<Stories

@@ -14,6 +14,7 @@ import BackDrop from './Components/BackDrop';
 import Axios from './utils/axiosInstance';
 import JwtDecode from 'jwt-decode';
 import SavedArticlesPage from './Pages/SavedArticlesPage';
+import SavedSearchesPage from './Pages/SavedSearchesPage';
 
 // const mql = window.matchMedia(`(min-width: 800px)`);
 
@@ -195,6 +196,18 @@ class App extends React.Component {
 								path='/user/bookmarks'
 								component={(props) => (
 									<SavedArticlesPage
+										{...props}
+										refreshUser={this.refreshUser}
+										bookmarkURLS={this.state.bookmarkURLS}
+										bookmarks={this.state.bookmarks}
+									/>
+								)}
+							/>
+							<Route
+								exact
+								path='/user/searches'
+								component={(props) => (
+									<SavedSearchesPage
 										{...props}
 										refreshUser={this.refreshUser}
 										bookmarkURLS={this.state.bookmarkURLS}

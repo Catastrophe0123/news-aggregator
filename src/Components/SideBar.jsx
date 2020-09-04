@@ -48,6 +48,12 @@ class SideBar extends React.Component {
 						<i class='fas fa-microchip'></i>Saved Articles
 					</NavLink>
 				)}
+				{this.props.isAuthenticated && (
+					<NavLink to='/user/searches'>
+						{' '}
+						<i class='fas fa-microchip'></i>Saved Searches
+					</NavLink>
+				)}
 
 				{this.props.isAuthenticated && (
 					<button onClick={this.props.onLogoutHandler}>
