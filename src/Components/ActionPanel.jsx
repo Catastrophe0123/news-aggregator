@@ -70,7 +70,12 @@ export class ActionPanel extends Component {
 			? 'fas px-2 fa-bookmark text-blue-600'
 			: 'far px-2 fa-bookmark';
 		return (
-			<span className='mx-2'>
+			<span
+				style={{
+					opacity: this.props.isHovering ? '100%' : '0%',
+					transition: 'all 0.15s ease-in',
+				}}
+				className='mx-2'>
 				<span
 					style={{ transition: 'color 0.1s ease-in' }}
 					onClick={this.props.onBookmarkHandler}

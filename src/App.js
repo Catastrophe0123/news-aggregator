@@ -15,6 +15,7 @@ import Axios from './utils/axiosInstance';
 import JwtDecode from 'jwt-decode';
 import SavedArticlesPage from './Pages/SavedArticlesPage';
 import SavedSearchesPage from './Pages/SavedSearchesPage';
+import PersonalizedNewsPage from './Pages/PersonalizedNewsPage';
 
 // const mql = window.matchMedia(`(min-width: 800px)`);
 
@@ -196,6 +197,18 @@ class App extends React.Component {
 								path='/user/bookmarks'
 								component={(props) => (
 									<SavedArticlesPage
+										{...props}
+										refreshUser={this.refreshUser}
+										bookmarkURLS={this.state.bookmarkURLS}
+										bookmarks={this.state.bookmarks}
+									/>
+								)}
+							/>
+							<Route
+								exact
+								path='/user/foryou'
+								component={(props) => (
+									<PersonalizedNewsPage
 										{...props}
 										refreshUser={this.refreshUser}
 										bookmarkURLS={this.state.bookmarkURLS}
