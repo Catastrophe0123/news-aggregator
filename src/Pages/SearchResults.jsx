@@ -136,15 +136,40 @@ export class SearchResults extends Component {
 							</div>
 						) : (
 							<div>
-								<h1 className=' mt-3 text-3xl font-medium font-serif flex justify-center w-full'>
-									{this.state.search &&
-										this.state.search.toUpperCase()}
-								</h1>
-								<button
-									className=''
-									onClick={this.onSaveSearchHandler}>
-									{this.state.buttonText}
-								</button>
+								<div className='flex justify-center'>
+									<div className='flex w-full max-w-lg justify-end'>
+										<div className='  flex items-center justify-between w-full  '>
+											<h1 className=' mt-3 text-3xl font-medium font-serif '>
+												{this.state.search &&
+													this.state.search.toUpperCase()}
+											</h1>
+											<button
+												style={{
+													transition:
+														'all 0.1s ease-in',
+												}}
+												className={`border-2 mt-3 text-gray-600 hover:shadow-lg hover:text-blue-700 hover:border-blue-700 px-3 shadow-md py-1 ${
+													this.state.buttonText ===
+													'Saved'
+														? ' text-blue-700 border-blue-500 '
+														: ''
+												}   rounded-full`}
+												onClick={
+													this.onSaveSearchHandler
+												}>
+												<i
+													className={`fa${
+														this.state
+															.buttonText ===
+														'Save'
+															? 'r'
+															: 's text-blue-700'
+													} fa-star pr-2 hover:text-blue-700  `}></i>
+												{this.state.buttonText}
+											</button>
+										</div>
+									</div>
+								</div>
 							</div>
 						)}
 

@@ -50,7 +50,7 @@ export default class HorizontalTabs extends Component {
 	}
 
 	state = {
-		selected,
+		selected: 'Latest',
 	};
 
 	onSelect = (key) => {
@@ -67,7 +67,7 @@ export default class HorizontalTabs extends Component {
 
 		return (
 			<div className='  flex justify-center w-full'>
-				<div className=' rounded App max-w-5xl min-w-0 '>
+				<div className=' rounded border-none App max-w-5xl min-w-0 '>
 					<ScrollMenu
 						alignCenter={false}
 						data={menu}

@@ -20,7 +20,7 @@ export class SavedSearch extends Component {
 					});
 				}}
 				style={{ transition: 'all 0.15s ease' }}
-				className={` cursor-pointer shadow-md flex flex-grow justify-between  border hover:shadow-lg border-gray-500 hover:border-gray-800  rounded-md p-2 m-2 my-3 w-full max-w-xs items-center`}>
+				className={` cursor-pointer shadow-md flex flex-grow justify-between  border hover:shadow-lg border-gray-500 hover:border-gray-800  rounded-md p-2 m-2 my-3 w-full  items-center`}>
 				<i
 					onClick={this.onClickHandler}
 					className=' hover:shadow-lg text-gray-700 p-2 pr-3 text-5xl fas fa-search'></i>

@@ -1,0 +1,5 @@
+.search-grid {
+	display: grid;
+	width: 95%;
+	grid-template-columns: repeat(auto-fit, minmax(270px, 1fr));
+}
