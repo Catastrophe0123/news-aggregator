@@ -19,7 +19,7 @@ import PersonalizedNewsPage from './Pages/PersonalizedNewsPage';
 
 // const mql = window.matchMedia(`(min-width: 800px)`);
 
-class App extends React.Component {
+class App extends React.PureComponent {
 	state = {
 		showModal: false,
 		authenticated: false,
@@ -28,6 +28,14 @@ class App extends React.Component {
 		bookmarks: [],
 		bookmarkURLS: [],
 	};
+
+	// openSidebar = () => {
+	// 	this.setState({ isOpen: true });
+	// };
+
+	// closeSidebar = () => {
+	// 	this.setState({ isOpen: false });
+	// };
 
 	// checkBookmarks = (data) => {
 	// 	for (const {url} of data) {
@@ -131,7 +139,7 @@ class App extends React.Component {
 
 	render() {
 		return (
-			<div>
+			<div style={{ overflowX: 'hidden' }}>
 				{this.state.showModal && !this.state.authenticated && (
 					<div>
 						<Modal>
@@ -159,13 +167,17 @@ class App extends React.Component {
 								authenticated={this.state.authenticated}
 								email={this.state.email}
 								onLoginClickHandler={this.onLoginClickHandler}
+								logout={this.logout}
 							/>
 						)}
 					/>
-					<SideBar
+					{/* <SideBar
+						// isOpen={this.state.isOpen}
+						// openSidebar={this.openSidebar}
+						// closeSidebar={this.closeSidebar}
 						isAuthenticated={this.state.authenticated}
 						onLogoutHandler={this.logout}
-					/>
+					/> */}
 					<Route path='/login' component={Login} />
 
 					<div className='container mx-auto px-2'>

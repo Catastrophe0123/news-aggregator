@@ -156,10 +156,10 @@ export class CategoryPage extends Component {
 			});
 			console.log('over here');
 			console.log(resp);
-			let totalPages = Math.ceil(resp.data.totalResults / 20);
+			let totalPages = Math.ceil(resp.data.data.totalResults / 20);
 			this.setState({
-				articles: resp.data.articles,
-				totalResults: resp.data.totalResults,
+				articles: resp.data.data.articles,
+				totalResults: resp.data.data.totalResults,
 				loadingSubTopic: false,
 				// search: search,
 				// currentPage: page,

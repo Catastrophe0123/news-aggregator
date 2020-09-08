@@ -4,64 +4,138 @@ import '../styles/sidebar.css';
 
 import { slide as Menu } from 'react-burger-menu';
 import { NavLink } from 'react-router-dom';
+import BackDrop from './BackDrop';
 
 class SideBar extends React.Component {
+	state = { isOpen: false };
+
 	render() {
+		// return (
+		// 	<Menu>
+		// 		<NavLink to='/headlines'>Home</NavLink>
+		// 		{/* <NavLink>About</NavLink>
+		// 		<NavLink>Contact</NavLink>
+		// 		<NavLink
+		// 		// onClick={this.showSettings}
+		// 		>
+		// 			Settings
+		// 		</NavLink> */}
+
+		// 		<NavLink to='/topics?category=business'>
+		// 			{' '}
+		// 			<i className='fas fa-money-check-alt'></i> Business
+		// 		</NavLink>
+		// 		<NavLink to='/topics?category=health'>
+		// 			{' '}
+		// 			<i className='fas fa-heartbeat'></i> Health
+		// 		</NavLink>
+		// 		<NavLink to='/topics?category=entertainment'>
+		// 			{' '}
+		// 			<i class='fas fa-film'></i>Entertainment
+		// 		</NavLink>
+		// 		<NavLink to='/topics?category=science'>
+		// 			{' '}
+		// 			<i class='fas fa-atom'></i>Science
+		// 		</NavLink>
+		// 		<NavLink to='/topics?category=sports'>
+		// 			{' '}
+		// 			<i class='fas fa-baseball-ball'></i>Sports
+		// 		</NavLink>
+		// 		<NavLink to='/topics?category=technology'>
+		// 			{' '}
+		// 			<i class='fas fa-microchip'></i>Technology
+		// 		</NavLink>
+		// 		{this.props.isAuthenticated && (
+		// 			<NavLink to='/user/bookmarks'>
+		// 				{' '}
+		// 				<i class='fas fa-microchip'></i>Saved Articles
+		// 			</NavLink>
+		// 		)}
+		// 		{this.props.isAuthenticated && (
+		// 			<NavLink to='/user/searches'>
+		// 				{' '}
+		// 				<i class='fas fa-microchip'></i>Saved Searches
+		// 			</NavLink>
+		// 		)}
+
+		// 		{this.props.isAuthenticated && (
+		// 			<button onClick={this.props.onLogoutHandler}>
+		// 				{' '}
+		// 				<i class='fas fa-microchip'></i>Logout
+		// 			</button>
+		// 		)}
+		// 	</Menu>
+		// );
+
 		return (
-			<Menu>
-				<NavLink to='/headlines'>Home</NavLink>
-				{/* <NavLink>About</NavLink>
-				<NavLink>Contact</NavLink>
-				<NavLink
-				// onClick={this.showSettings}
-				>
-					Settings
-				</NavLink> */}
+			<div>
+				{/* <button
+					onClick={() => {
+						this.setState({ isOpen: true });
+					}}>
+					open
+				</button> */}
 
-				<NavLink to='/topics?category=business'>
-					{' '}
-					<i className='fas fa-money-check-alt'></i> Business
-				</NavLink>
-				<NavLink to='/topics?category=health'>
-					{' '}
-					<i className='fas fa-heartbeat'></i> Health
-				</NavLink>
-				<NavLink to='/topics?category=entertainment'>
-					{' '}
-					<i class='fas fa-film'></i>Entertainment
-				</NavLink>
-				<NavLink to='/topics?category=science'>
-					{' '}
-					<i class='fas fa-atom'></i>Science
-				</NavLink>
-				<NavLink to='/topics?category=sports'>
-					{' '}
-					<i class='fas fa-baseball-ball'></i>Sports
-				</NavLink>
-				<NavLink to='/topics?category=technology'>
-					{' '}
-					<i class='fas fa-microchip'></i>Technology
-				</NavLink>
-				{this.props.isAuthenticated && (
-					<NavLink to='/user/bookmarks'>
-						{' '}
-						<i class='fas fa-microchip'></i>Saved Articles
-					</NavLink>
-				)}
-				{this.props.isAuthenticated && (
-					<NavLink to='/user/searches'>
-						{' '}
-						<i class='fas fa-microchip'></i>Saved Searches
-					</NavLink>
-				)}
+				<div
+					// class='w3-sidebar w3-bar-block w3-border-right'
+					className='sidenav'
+					style={{ width: this.props.isOpen ? '250px' : '0px' }}>
+					{/* <button
+						onClick={this.props.closeSidebar}
+						className='closebtn'>
+						Close &times;
+					</button> */}
 
-				{this.props.isAuthenticated && (
-					<button onClick={this.props.onLogoutHandler}>
+					<NavLink to='/headlines'>Home</NavLink>
+
+					<NavLink to='/topics?category=business'>
 						{' '}
-						<i class='fas fa-microchip'></i>Logout
-					</button>
+						<i className='fas fa-money-check-alt'></i> Business
+					</NavLink>
+					<NavLink to='/topics?category=health'>
+						{' '}
+						<i className='fas fa-heartbeat'></i> Health
+					</NavLink>
+					<NavLink to='/topics?category=entertainment'>
+						{' '}
+						<i class='fas fa-film'></i>Entertainment
+					</NavLink>
+					<NavLink to='/topics?category=science'>
+						{' '}
+						<i class='fas fa-atom'></i>Science
+					</NavLink>
+					<NavLink to='/topics?category=sports'>
+						{' '}
+						<i class='fas fa-baseball-ball'></i>Sports
+					</NavLink>
+					<NavLink to='/topics?category=technology'>
+						{' '}
+						<i class='fas fa-microchip'></i>Technology
+					</NavLink>
+					{this.props.isAuthenticated && (
+						<NavLink to='/user/bookmarks'>
+							{' '}
+							<i class='fas fa-microchip'></i>Saved Articles
+						</NavLink>
+					)}
+					{this.props.isAuthenticated && (
+						<NavLink to='/user/searches'>
+							{' '}
+							<i class='fas fa-microchip'></i>Saved Searches
+						</NavLink>
+					)}
+
+					{this.props.isAuthenticated && (
+						<button onClick={this.props.onLogoutHandler}>
+							{' '}
+							<i class='fas fa-microchip'></i>Logout
+						</button>
+					)}
+				</div>
+				{this.props.isOpen && (
+					<BackDrop onclick={this.props.closeSidebar} />
 				)}
-			</Menu>
+			</div>
 		);
 	}
 }

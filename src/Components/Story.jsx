@@ -25,6 +25,68 @@ export class Story extends Component {
 
 	render() {
 		dayjs.extend(RelativeTime);
+
+		if (this.props.cardView) {
+			return (
+				<div className='m-3 px-1 border rounded-lg  flex items-center '>
+					<div
+						onMouseEnter={(e) => {
+							this.setState({ isHovering: true });
+						}}
+						onMouseLeave={(e) => {
+							this.setState({ isHovering: false });
+						}}
+						className='flex flex-col  flex-wrap justify-center items-start   '>
+						<div>
+							<a target='_blank' href={this.props.url}>
+								<img
+									// style={{ maxHeight: '300px' }}
+									className=' max-w-full border rounded-lg'
+									src={this.props.urlToImage}
+									alt=''
+								/>
+							</a>
+						</div>
+						<div className=' text-lg pt-2 text-gray-900 font-bold hover:underline '>
+							<a target='_blank' href={this.props.url}>
+								{this.props.title}
+							</a>
+						</div>
+						<div>
+							<p className=' py-2 self-start text-sm text-gray-700 '>
+								{this.props.source.id ? (
+									<Link
+										to={`/search?sources=${this.props.source.id}`}>
+										{this.props.source.name}
+									</Link>
+								) : (
+									this.props.source.name
+								)}{' '}
+								&#183;{' '}
+								{dayjs(this.props.publishedAt).fromNow(true)}{' '}
+								ago{' '}
+								<ActionPanel
+									isHovering={this.state.isHovering}
+									bookmarked={this.props.bookmarked}
+									onBookmarkHandler={this.onBookmarkHandler}
+									goToSourceHandler={this.goToSourceHandler}
+									hideStoryHandler={
+										this.props.hideStoryHandler
+									}
+									storyId={this.props.idkey}
+									sourceId={this.props.source.id}
+									sourceName={this.props.source.name}
+									userCopied={this.userCopied}
+									articleURL={this.props.url}
+									removeSourceHandler={() => {}}
+								/>
+							</p>
+						</div>
+					</div>
+				</div>
+			);
+		}
+
 		return (
 			<div className='m-3 max-w-4xl w-full'>
 				<div
@@ -37,7 +99,7 @@ export class Story extends Component {
 					className='border rounded-lg border-gray-500 shadow-md hover:shadow-lg p-5'>
 					<div
 						// className='flex justify-between '
-						className='custom-grid '>
+						className=' custom-grid '>
 						<div>
 							<h1 className='  text-lg font-bold hover:underline '>
 								<a target='_blank' href={this.props.url}>
@@ -56,7 +118,7 @@ export class Story extends Component {
 								&#183;{' '}
 								{dayjs(this.props.publishedAt).fromNow(true)}{' '}
 								ago{' '}
-								{this.state.isHovering && (
+								{/* {this.state.isHovering && (
 									<ActionPanel
 										bookmarked={this.props.bookmarked}
 										onBookmarkHandler={
@@ -75,7 +137,22 @@ export class Story extends Component {
 										articleURL={this.props.url}
 										removeSourceHandler={() => {}}
 									/>
-								)}
+								)} */}
+								<ActionPanel
+									isHovering={this.state.isHovering}
+									bookmarked={this.props.bookmarked}
+									onBookmarkHandler={this.onBookmarkHandler}
+									goToSourceHandler={this.goToSourceHandler}
+									hideStoryHandler={
+										this.props.hideStoryHandler
+									}
+									storyId={this.props.idkey}
+									sourceId={this.props.source.id}
+									sourceName={this.props.source.name}
+									userCopied={this.userCopied}
+									articleURL={this.props.url}
+									removeSourceHandler={() => {}}
+								/>
 							</p>
 							{this.props.description !== '' ? (
 								<p className='font-sans'>

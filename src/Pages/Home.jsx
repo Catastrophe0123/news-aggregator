@@ -127,6 +127,7 @@ export class Home extends Component {
 				{this.state.articles && (
 					<div>
 						<Stories
+							// cardView={false}
 							hideStoryHandler={this.hideStoryHandler}
 							bookmarkURLS={this.props.bookmarkURLS}
 							refreshUser={this.props.refreshUser}

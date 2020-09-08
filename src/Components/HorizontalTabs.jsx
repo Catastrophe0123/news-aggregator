@@ -66,8 +66,8 @@ export default class HorizontalTabs extends Component {
 		const menu = this.menuItems;
 
 		return (
-			<div className='flex justify-center w-full'>
-				<div className='App max-w-5xl min-w-0 '>
+			<div className='  flex justify-center w-full'>
+				<div className=' rounded App max-w-5xl min-w-0 '>
 					<ScrollMenu
 						alignCenter={false}
 						data={menu}
