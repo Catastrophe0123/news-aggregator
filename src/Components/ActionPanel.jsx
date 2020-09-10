@@ -42,7 +42,7 @@ export class ActionPanel extends Component {
 	};
 
 	menu = () => (
-		<Menu onSelect={this.onSelect}>
+		<Menu selectedKeys={[]} onSelect={this.onSelect}>
 			<MenuItem key='0'>
 				<span className=' cursor-pointer text-base'>
 					Hide this story

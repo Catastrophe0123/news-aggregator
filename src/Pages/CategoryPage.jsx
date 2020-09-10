@@ -66,7 +66,6 @@ export class CategoryPage extends Component {
 		{ name: 'Physics' },
 		{ name: 'Genetics' },
 		{ name: 'Wildlife' },
-		{ name: 'Genetics' },
 	];
 
 	healthSubTopics = [

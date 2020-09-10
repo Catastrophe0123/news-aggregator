@@ -111,6 +111,10 @@ export default class Navbar extends Component {
 		return (
 			<div className=' overflow-x-hidden h-16'>
 				<SideBar
+					showPreferences={this.props.showPreferences}
+					onPreferencesOpenHandler={
+						this.props.onPreferencesOpenHandler
+					}
 					isOpen={this.state.isOpen}
 					openSidebar={this.openSidebar}
 					closeSidebar={this.closeSidebar}

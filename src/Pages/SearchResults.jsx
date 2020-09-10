@@ -86,6 +86,7 @@ export class SearchResults extends Component {
 		// code
 		try {
 			console.log('hereoiqwjn');
+			this.setState({ buttonText: 'Loading' });
 			let resp = await Axios.post('/search/save', {
 				searchString: this.state.search,
 			});
@@ -137,36 +138,50 @@ export class SearchResults extends Component {
 						) : (
 							<div>
 								<div className='flex justify-center'>
-									<div className='flex w-full max-w-lg justify-end'>
-										<div className='  flex items-center justify-between w-full  '>
+									<div className=' w-full max-w-lg '>
+										<div
+											className={`flex items-center justify-${
+												this.props.isAuthenticated
+													? 'between'
+													: 'center'
+											} w-full`}>
 											<h1 className=' mt-3 text-3xl font-medium font-serif '>
 												{this.state.search &&
 													this.state.search.toUpperCase()}
 											</h1>
-											<button
-												style={{
-													transition:
-														'all 0.1s ease-in',
-												}}
-												className={`border-2 mt-3 text-gray-600 hover:shadow-lg hover:text-blue-700 hover:border-blue-700 px-3 shadow-md py-1 ${
-													this.state.buttonText ===
-													'Saved'
-														? ' text-blue-700 border-blue-500 '
-														: ''
-												}   rounded-full`}
-												onClick={
-													this.onSaveSearchHandler
-												}>
-												<i
-													className={`fa${
+											{this.props.isAuthenticated && (
+												<button
+													disabled={
 														this.state
 															.buttonText ===
-														'Save'
-															? 'r'
-															: 's text-blue-700'
-													} fa-star pr-2 hover:text-blue-700  `}></i>
-												{this.state.buttonText}
-											</button>
+														'Loading'
+													}
+													style={{
+														transition:
+															'all 0.1s ease-in',
+														outline: 'none',
+													}}
+													className={`border-2 mt-3 text-gray-600 hover:shadow-lg hover:text-blue-700 hover:border-blue-700 px-3 shadow-md py-1 ${
+														this.state
+															.buttonText ===
+														'Saved'
+															? ' text-blue-700 border-blue-500 '
+															: ''
+													}   rounded-full`}
+													onClick={
+														this.onSaveSearchHandler
+													}>
+													<i
+														className={`fa${
+															this.state
+																.buttonText ===
+															'Save'
+																? 'r'
+																: 's text-blue-700'
+														} fa-star pr-2 hover:text-blue-700  `}></i>
+													{this.state.buttonText}
+												</button>
+											)}
 										</div>
 									</div>
 								</div>

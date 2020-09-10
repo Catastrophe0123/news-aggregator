@@ -28,7 +28,7 @@ export class Story extends Component {
 
 		if (this.props.cardView) {
 			return (
-				<div className='m-3 px-1 border rounded-lg  flex items-center '>
+				<div className='m-3 px-1 border rounded-lg   flex items-center '>
 					<div
 						onMouseEnter={(e) => {
 							this.setState({ isHovering: true });
@@ -38,7 +38,10 @@ export class Story extends Component {
 						}}
 						className='flex flex-col  flex-wrap justify-center items-start   '>
 						<div>
-							<a target='_blank' href={this.props.url}>
+							<a
+								target='_blank'
+								rel='noopener noreferrer'
+								href={this.props.url}>
 								<img
 									// style={{ maxHeight: '300px' }}
 									className=' max-w-full border rounded-lg'
@@ -48,7 +51,10 @@ export class Story extends Component {
 							</a>
 						</div>
 						<div className=' text-lg pt-2 text-gray-900 font-bold hover:underline '>
-							<a target='_blank' href={this.props.url}>
+							<a
+								target='_blank'
+								rel='noopener noreferrer'
+								href={this.props.url}>
 								{this.props.title}
 							</a>
 						</div>
@@ -102,7 +108,10 @@ export class Story extends Component {
 						className=' custom-grid '>
 						<div>
 							<h1 className='  text-lg font-bold hover:underline '>
-								<a target='_blank' href={this.props.url}>
+								<a
+									target='_blank'
+									rel='noopener noreferrer'
+									href={this.props.url}>
 									{this.props.title}
 								</a>
 							</h1>

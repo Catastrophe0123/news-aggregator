@@ -5,68 +5,20 @@ import '../styles/sidebar.css';
 import { slide as Menu } from 'react-burger-menu';
 import { NavLink } from 'react-router-dom';
 import BackDrop from './BackDrop';
+import Modal from './Modal';
 
 class SideBar extends React.Component {
-	state = { isOpen: false };
+	state = { isOpen: false, isPreferencesOpen: false };
+
+	onPreferencesClickHandler = () => {
+		this.setState({ isPreferencesOpen: true });
+	};
+
+	closePreferencesHandler = () => {
+		this.setState({ isPreferencesOpen: false });
+	};
 
 	render() {
-		// return (
-		// 	<Menu>
-		// 		<NavLink to='/headlines'>Home</NavLink>
-		// 		{/* <NavLink>About</NavLink>
-		// 		<NavLink>Contact</NavLink>
-		// 		<NavLink
-		// 		// onClick={this.showSettings}
-		// 		>
-		// 			Settings
-		// 		</NavLink> */}
-
-		// 		<NavLink to='/topics?category=business'>
-		// 			{' '}
-		// 			<i className='fas fa-money-check-alt'></i> Business
-		// 		</NavLink>
-		// 		<NavLink to='/topics?category=health'>
-		// 			{' '}
-		// 			<i className='fas fa-heartbeat'></i> Health
-		// 		</NavLink>
-		// 		<NavLink to='/topics?category=entertainment'>
-		// 			{' '}
-		// 			<i class='fas fa-film'></i>Entertainment
-		// 		</NavLink>
-		// 		<NavLink to='/topics?category=science'>
-		// 			{' '}
-		// 			<i class='fas fa-atom'></i>Science
-		// 		</NavLink>
-		// 		<NavLink to='/topics?category=sports'>
-		// 			{' '}
-		// 			<i class='fas fa-baseball-ball'></i>Sports
-		// 		</NavLink>
-		// 		<NavLink to='/topics?category=technology'>
-		// 			{' '}
-		// 			<i class='fas fa-microchip'></i>Technology
-		// 		</NavLink>
-		// 		{this.props.isAuthenticated && (
-		// 			<NavLink to='/user/bookmarks'>
-		// 				{' '}
-		// 				<i class='fas fa-microchip'></i>Saved Articles
-		// 			</NavLink>
-		// 		)}
-		// 		{this.props.isAuthenticated && (
-		// 			<NavLink to='/user/searches'>
-		// 				{' '}
-		// 				<i class='fas fa-microchip'></i>Saved Searches
-		// 			</NavLink>
-		// 		)}
-
-		// 		{this.props.isAuthenticated && (
-		// 			<button onClick={this.props.onLogoutHandler}>
-		// 				{' '}
-		// 				<i class='fas fa-microchip'></i>Logout
-		// 			</button>
-		// 		)}
-		// 	</Menu>
-		// );
-
 		return (
 			<div>
 				{/* <button
@@ -87,7 +39,12 @@ class SideBar extends React.Component {
 					</button> */}
 
 					<NavLink to='/headlines'>Home</NavLink>
-
+					{this.props.isAuthenticated && (
+						<NavLink to='/user/foryou'>
+							{' '}
+							<i class='fas fa-user'></i>For you
+						</NavLink>
+					)}
 					<NavLink to='/topics?category=business'>
 						{' '}
 						<i className='fas fa-money-check-alt'></i> Business
@@ -110,7 +67,7 @@ class SideBar extends React.Component {
 					</NavLink>
 					<NavLink to='/topics?category=technology'>
 						{' '}
-						<i class='fas fa-microchip'></i>Technology
+						<i class=' fas fa-microchip'></i>Technology
 					</NavLink>
 					{this.props.isAuthenticated && (
 						<NavLink to='/user/bookmarks'>
@@ -123,6 +80,13 @@ class SideBar extends React.Component {
 							{' '}
 							<i class='fas fa-microchip'></i>Saved Searches
 						</NavLink>
+					)}
+
+					{this.props.isAuthenticated && (
+						<button onClick={this.props.onPreferencesOpenHandler}>
+							{' '}
+							<i class='fas fa-microchip'></i>Preferences
+						</button>
 					)}
 
 					{this.props.isAuthenticated && (

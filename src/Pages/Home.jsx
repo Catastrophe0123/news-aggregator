@@ -50,37 +50,39 @@ export class Home extends Component {
 	componentDidMount = async () => {
 		// do the api call here
 
-		let headlines = localStorage.headlines;
-		let paramString = this.props.location.search;
+		await this.fetchHeadlines();
 
-		let params = new URLSearchParams(paramString);
-		let page = Number(params.get('page'));
-		if (!page) {
-			if (headlines) {
-				let parsedheadlines = JSON.parse(headlines);
-				let time = new Date(parsedheadlines.storageTime);
-				let currentTime = new Date();
-				let diff = this.diffMinutes(currentTime, time);
-				if (diff > 60) {
-					await this.fetchHeadlines();
-				} else {
-					console.log('loading from local storage');
-					this.setState({
-						articles: parsedheadlines.data.articles,
-						totalResults: parsedheadlines.data.totalResults,
-						loading: false,
-						totalPages: Math.ceil(
-							parsedheadlines.data.totalResults / 20
-						),
-						currentPage: 1,
-					});
-				}
-			} else {
-				await this.fetchHeadlines();
-			}
-		} else {
-			await this.fetchHeadlines();
-		}
+		// let headlines = localStorage.headlines;
+		// let paramString = this.props.location.search;
+
+		// let params = new URLSearchParams(paramString);
+		// let page = Number(params.get('page'));
+		// if (!page) {
+		// 	if (headlines) {
+		// 		let parsedheadlines = JSON.parse(headlines);
+		// 		let time = new Date(parsedheadlines.storageTime);
+		// 		let currentTime = new Date();
+		// 		let diff = this.diffMinutes(currentTime, time);
+		// 		if (diff > 60) {
+		// 			await this.fetchHeadlines();
+		// 		} else {
+		// 			console.log('loading from local storage');
+		// 			this.setState({
+		// 				articles: parsedheadlines.data.articles,
+		// 				totalResults: parsedheadlines.data.totalResults,
+		// 				loading: false,
+		// 				totalPages: Math.ceil(
+		// 					parsedheadlines.data.totalResults / 20
+		// 				),
+		// 				currentPage: 1,
+		// 			});
+		// 		}
+		// 	} else {
+		// 		await this.fetchHeadlines();
+		// 	}
+		// } else {
+		// 	await this.fetchHeadlines();
+		// }
 	};
 
 	componentDidUpdate = async (prevProps, prevState) => {

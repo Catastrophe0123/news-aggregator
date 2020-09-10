@@ -19,8 +19,18 @@ export class PersonalizedNewsPage extends Component {
 	render() {
 		return (
 			<div>
-				<h1>HELLO FROM THIS PAGE</h1>
+				<div className='flex justify-center w-full'>
+					<h1 className=' mt-3 text-3xl font-medium font-serif '>
+						For You
+					</h1>
+				</div>
+
+				<div className='flex justify-center text-gray-700 pb-3 '>
+					Recommended based on your interests
+				</div>
+
 				{this.state.loading && <Loading />}
+
 				{this.state.articles && (
 					<Stories
 						hideStoryHandler={this.props.hideStoryHandler}

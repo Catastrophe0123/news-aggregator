@@ -1,12 +1,10 @@
 import React from 'react';
 import logo from './logo.svg';
-// import './App.css';
 import './styles/app.css';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import Home from './Pages/Home';
 import Navbar from './Components/Navbar';
 import SearchResults from './Pages/SearchResults';
-import SideBar from './Components/SideBar';
 import CategoryPage from './Pages/CategoryPage';
 import Login from './Components/Login';
 import Modal from './Components/Modal';
@@ -16,8 +14,9 @@ import JwtDecode from 'jwt-decode';
 import SavedArticlesPage from './Pages/SavedArticlesPage';
 import SavedSearchesPage from './Pages/SavedSearchesPage';
 import PersonalizedNewsPage from './Pages/PersonalizedNewsPage';
+import Preferences from './Components/Preferences';
 
-// const mql = window.matchMedia(`(min-width: 800px)`);
+import MyContext from './utils/MyContext';
 
 class App extends React.PureComponent {
 	state = {
@@ -27,6 +26,9 @@ class App extends React.PureComponent {
 		token: null,
 		bookmarks: [],
 		bookmarkURLS: [],
+		showPreferences: false,
+		country: null,
+		layout: 'list',
 	};
 
 	// openSidebar = () => {
@@ -70,11 +72,34 @@ class App extends React.PureComponent {
 		}, time);
 	};
 
+	getCountry = () => {
+		navigator.geolocation.getCurrentPosition(
+			async (position) => {
+				let { latitude, longitude } = position.coords;
+				try {
+					let resp = await Axios.post('/country', {
+						lat: latitude,
+						lon: longitude,
+					});
+					this.setState({ country: resp.data.country });
+				} catch (err) {
+					console.log(err.response);
+				}
+			},
+			(err) => {
+				console.log(err);
+			}
+		);
+	};
+
 	componentDidMount = () => {
 		let email = localStorage.email;
 		let token = localStorage.token;
 		let bookmarks = localStorage.bookmarks;
+		let layout = localStorage.layout;
+		let country = localStorage.country;
 		if (bookmarks) bookmarks = JSON.parse(bookmarks);
+
 		console.log(bookmarks);
 		let authenticated = false;
 		if (token && email) {
@@ -96,14 +121,19 @@ class App extends React.PureComponent {
 					urls.push(i.url);
 				}
 
+				if (!country || country === 'null') {
+					this.getCountry();
+				}
+
 				this.setState({
 					authenticated,
 					email,
 					token,
 					bookmarks,
+					layout,
+					country,
 					bookmarkURLS: urls,
 				});
-				console.log('authenicated boi');
 			}
 		}
 	};
@@ -115,6 +145,13 @@ class App extends React.PureComponent {
 		this.setState({ showModal: true });
 	};
 
+	onPreferencesCloseHandler = () => {
+		this.setState({ showPreferences: false });
+	};
+	onPreferencesOpenHandler = () => {
+		this.setState({ showPreferences: true });
+	};
+
 	logout = () => {
 		localStorage.clear();
 		this.setState({
@@ -122,9 +159,20 @@ class App extends React.PureComponent {
 		});
 	};
 
-	loginSuccessHandler = (token, email, bookmarks = []) => {
+	loginSuccessHandler = (
+		token,
+		email,
+		bookmarks = [],
+		layout,
+		country = null
+	) => {
+		if (!country) {
+			this.getCountry();
+		}
 		localStorage.setItem('token', token);
 		localStorage.setItem('email', email);
+		localStorage.setItem('country', country);
+		localStorage.setItem('layout', layout);
 		localStorage.setItem('bookmarks', JSON.stringify(bookmarks));
 		Axios.defaults.headers.common['Authorization'] = token;
 		this.setState({
@@ -132,140 +180,196 @@ class App extends React.PureComponent {
 			authenticated: true,
 			email: email,
 			token: token,
+			layout,
+			country,
 		});
 		this.refreshUser(bookmarks);
 		console.log('authenticated');
 	};
 
+	setPreferences = (country, layout) => {
+		this.setState({ country, layout }, () => {
+			localStorage.setItem('layout', layout);
+			localStorage.setItem('country', country);
+			this.onPreferencesCloseHandler();
+		});
+	};
+
 	render() {
 		return (
-			<div style={{ overflowX: 'hidden' }}>
-				{this.state.showModal && !this.state.authenticated && (
-					<div>
-						<Modal>
-							<Login
-								loginSuccessHandler={this.loginSuccessHandler}
-								onLoginHandler={this.onLoginHandler}
-								onSignupHandler={this.onSignupHandler}
+			<MyContext.Provider value={this.state.layout}>
+				<div style={{ overflowX: 'hidden' }}>
+					{this.state.showModal && !this.state.authenticated && (
+						<div>
+							<Modal>
+								<Login
+									loginSuccessHandler={
+										this.loginSuccessHandler
+									}
+									onLoginHandler={this.onLoginHandler}
+									onSignupHandler={this.onSignupHandler}
+								/>
+							</Modal>
+							<BackDrop onclick={this.onModalDismissHandler} />
+						</div>
+					)}
+
+					{this.state.showPreferences && (
+						<div>
+							<Modal>
+								<Preferences
+									setPreferences={this.setPreferences}
+									onPreferencesCloseHandler={
+										this.onPreferencesCloseHandler
+									}
+								/>
+							</Modal>
+							<BackDrop
+								onclick={this.onPreferencesCloseHandler}
 							/>
-						</Modal>
-						<BackDrop onclick={this.onModalDismissHandler} />
-					</div>
-				)}
-				{/* <Sidebar
+						</div>
+					)}
+					{/* <Sidebar
 						sidebar={<b>Sidebar content</b>}
 						open={this.state.sidebarOpen}
 						docked={this.state.sidebarDocked}
 						onSetOpen={this.onSetSidebarOpen}>
 						<b>Main content</b>
 					</Sidebar> */}
-				<Router>
-					<Route
-						component={(props) => (
-							<Navbar
-								{...props}
-								authenticated={this.state.authenticated}
-								email={this.state.email}
-								onLoginClickHandler={this.onLoginClickHandler}
-								logout={this.logout}
-							/>
-						)}
-					/>
-					{/* <SideBar
+					<Router>
+						<Route
+							component={(props) => (
+								<Navbar
+									{...props}
+									showPreferences={this.state.showPreferences}
+									onPreferencesOpenHandler={
+										this.onPreferencesOpenHandler
+									}
+									authenticated={this.state.authenticated}
+									email={this.state.email}
+									onLoginClickHandler={
+										this.onLoginClickHandler
+									}
+									logout={this.logout}
+								/>
+							)}
+						/>
+						{/* <SideBar
 						// isOpen={this.state.isOpen}
 						// openSidebar={this.openSidebar}
 						// closeSidebar={this.closeSidebar}
 						isAuthenticated={this.state.authenticated}
 						onLogoutHandler={this.logout}
 					/> */}
-					<Route path='/login' component={Login} />
+						<Route path='/login' component={Login} />
 
-					<div className='container mx-auto px-2'>
-						<Switch>
-							<Route
-								exact
-								path='/'
-								component={(props) => (
-									<Home
-										{...props}
-										bookmarkURLS={this.state.bookmarkURLS}
-										refreshUser={this.refreshUser}
-									/>
-								)}
-							/>
-							<Route
-								exact
-								path='/headlines'
-								component={(props) => (
-									<Home
-										{...props}
-										bookmarkURLS={this.state.bookmarkURLS}
-										refreshUser={this.refreshUser}
-									/>
-								)}
-							/>
-							<Route
-								exact
-								path='/user/bookmarks'
-								component={(props) => (
-									<SavedArticlesPage
-										{...props}
-										refreshUser={this.refreshUser}
-										bookmarkURLS={this.state.bookmarkURLS}
-										bookmarks={this.state.bookmarks}
-									/>
-								)}
-							/>
-							<Route
-								exact
-								path='/user/foryou'
-								component={(props) => (
-									<PersonalizedNewsPage
-										{...props}
-										refreshUser={this.refreshUser}
-										bookmarkURLS={this.state.bookmarkURLS}
-										bookmarks={this.state.bookmarks}
-									/>
-								)}
-							/>
-							<Route
-								exact
-								path='/user/searches'
-								component={(props) => (
-									<SavedSearchesPage
-										{...props}
-										refreshUser={this.refreshUser}
-										bookmarkURLS={this.state.bookmarkURLS}
-										bookmarks={this.state.bookmarks}
-									/>
-								)}
-							/>
-							<Route
-								exact
-								path='/search'
-								component={(props) => (
-									<SearchResults
-										{...props}
-										bookmarkURLS={this.state.bookmarkURLS}
-										refreshUser={this.refreshUser}
-									/>
-								)}
-							/>
-							<Route
-								exact
-								path='/topics'
-								component={(props) => (
-									<CategoryPage
-										{...props}
-										bookmarkURLS={this.state.bookmarkURLS}
-										refreshUser={this.refreshUser}
-									/>
-								)}
-							/>
-						</Switch>
-					</div>
-				</Router>
-			</div>
+						<div className='container mx-auto px-2'>
+							<Switch>
+								<Route
+									exact
+									path='/'
+									component={(props) => (
+										<Home
+											{...props}
+											bookmarkURLS={
+												this.state.bookmarkURLS
+											}
+											refreshUser={this.refreshUser}
+										/>
+									)}
+								/>
+								<Route
+									exact
+									path='/headlines'
+									component={(props) => (
+										<Home
+											{...props}
+											bookmarkURLS={
+												this.state.bookmarkURLS
+											}
+											refreshUser={this.refreshUser}
+										/>
+									)}
+								/>
+								<Route
+									exact
+									path='/user/bookmarks'
+									component={(props) => (
+										<SavedArticlesPage
+											{...props}
+											refreshUser={this.refreshUser}
+											bookmarkURLS={
+												this.state.bookmarkURLS
+											}
+											bookmarks={this.state.bookmarks}
+										/>
+									)}
+								/>
+								<Route
+									exact
+									path='/user/foryou'
+									component={(props) => (
+										<PersonalizedNewsPage
+											{...props}
+											refreshUser={this.refreshUser}
+											bookmarkURLS={
+												this.state.bookmarkURLS
+											}
+											bookmarks={this.state.bookmarks}
+										/>
+									)}
+								/>
+								<Route
+									exact
+									path='/user/searches'
+									component={(props) => (
+										<SavedSearchesPage
+											{...props}
+											isAuthenticated={
+												this.state.authenticated
+											}
+											refreshUser={this.refreshUser}
+											bookmarkURLS={
+												this.state.bookmarkURLS
+											}
+											bookmarks={this.state.bookmarks}
+										/>
+									)}
+								/>
+								<Route
+									exact
+									path='/search'
+									component={(props) => (
+										<SearchResults
+											{...props}
+											isAuthenticated={
+												this.state.authenticated
+											}
+											bookmarkURLS={
+												this.state.bookmarkURLS
+											}
+											refreshUser={this.refreshUser}
+										/>
+									)}
+								/>
+								<Route
+									exact
+									path='/topics'
+									component={(props) => (
+										<CategoryPage
+											{...props}
+											bookmarkURLS={
+												this.state.bookmarkURLS
+											}
+											refreshUser={this.refreshUser}
+										/>
+									)}
+								/>
+							</Switch>
+						</div>
+					</Router>
+				</div>
+			</MyContext.Provider>
 		);
 	}
 }
