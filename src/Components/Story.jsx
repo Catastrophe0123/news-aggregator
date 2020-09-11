@@ -72,6 +72,7 @@ export class Story extends Component {
 								{dayjs(this.props.publishedAt).fromNow(true)}{' '}
 								ago{' '}
 								<ActionPanel
+									isAuthenticated={this.props.isAuthenticated}
 									isHovering={this.state.isHovering}
 									bookmarked={this.props.bookmarked}
 									onBookmarkHandler={this.onBookmarkHandler}
@@ -148,6 +149,7 @@ export class Story extends Component {
 									/>
 								)} */}
 								<ActionPanel
+									isAuthenticated={this.props.isAuthenticated}
 									isHovering={this.state.isHovering}
 									bookmarked={this.props.bookmarked}
 									onBookmarkHandler={this.onBookmarkHandler}

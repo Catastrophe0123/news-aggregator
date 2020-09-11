@@ -25,9 +25,15 @@ export class Stories extends Component {
 	}
 
 	render() {
+		if (this.props.articles.length <= 0) {
+			return (
+				<p>Nothing to show here. Please try a different search term</p>
+			);
+		}
+
 		return (
 			<MyContext.Consumer>
-				{(layout) => {
+				{({ layout, isAuthenticated }) => {
 					let cardView = layout === 'grid';
 
 					// cardView = false;
@@ -40,6 +46,9 @@ export class Stories extends Component {
 									<div className='flex flex-wrap  justify-center'>
 										{this.props.articles.map((el, idx) => (
 											<Story
+												isAuthenticated={
+													isAuthenticated
+												}
 												hideStoryHandler={
 													this.props.hideStoryHandler
 												}
@@ -73,9 +82,13 @@ export class Stories extends Component {
 										}>
 										{this.props.articles.map((el, idx) => (
 											<div
-												// className='flex xl:max-w-sm lg:max-w-xs md:max-w-xs sm:max-w-lg '
-												className=' '>
+											// className='flex xl:max-w-sm lg:max-w-xs md:max-w-xs sm:max-w-lg '
+											// className=' '
+											>
 												<Story
+													isAuthenticated={
+														isAuthenticated
+													}
 													cardView={cardView}
 													hideStoryHandler={
 														this.props

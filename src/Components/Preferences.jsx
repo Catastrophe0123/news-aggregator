@@ -16,6 +16,30 @@ export class Preferences extends Component {
 		layoutLabel: 'List',
 	};
 
+	componentDidMount = () => {
+		let defaultCountry = this.countries[0];
+		let defaultLayout = this.layouts[0];
+
+		for (let i of this.countries) {
+			if (i.value === this.props.country) {
+				defaultCountry = i;
+			}
+		}
+
+		for (let i of this.layouts) {
+			if (i.value === this.props.layout) {
+				defaultLayout = i;
+			}
+		}
+
+		this.setState({
+			countryValue: defaultCountry.value,
+			countryLabel: defaultCountry.label,
+			layoutValue: defaultLayout.value,
+			layoutLabel: defaultLayout.label,
+		});
+	};
+
 	countries = [
 		{ value: 'ar', label: 'Argentina' },
 		{ value: 'au', label: 'Australia' },
@@ -98,6 +122,8 @@ export class Preferences extends Component {
 	};
 
 	render() {
+		// in
+
 		return (
 			<div>
 				<div className='w-full  bg-white border border-black rounded-lg '>
@@ -122,7 +148,7 @@ export class Preferences extends Component {
 										}}
 										className='basic-single'
 										classNamePrefix='select'
-										defaultValue={this.countries[0]}
+										// defaultValue={defaultCountry}
 										isSearchable={true}
 										name='country'
 										options={this.countries}
@@ -145,7 +171,7 @@ export class Preferences extends Component {
 										}}
 										className='basic-single'
 										classNamePrefix='select'
-										defaultValue={this.layouts[0]}
+										// defaultValue={defaultLayout}
 										isSearchable={true}
 										name='layout'
 										options={this.layouts}

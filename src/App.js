@@ -17,6 +17,7 @@ import PersonalizedNewsPage from './Pages/PersonalizedNewsPage';
 import Preferences from './Components/Preferences';
 
 import MyContext from './utils/MyContext';
+import AuthRoute from './Components/AuthRoute';
 
 class App extends React.PureComponent {
 	state = {
@@ -155,7 +156,15 @@ class App extends React.PureComponent {
 	logout = () => {
 		localStorage.clear();
 		this.setState({
+			showModal: false,
 			authenticated: false,
+			email: null,
+			token: null,
+			bookmarks: [],
+			bookmarkURLS: [],
+			showPreferences: false,
+			country: null,
+			layout: 'list',
 		});
 	};
 
@@ -197,7 +206,11 @@ class App extends React.PureComponent {
 
 	render() {
 		return (
-			<MyContext.Provider value={this.state.layout}>
+			<MyContext.Provider
+				value={{
+					layout: this.state.layout,
+					isAuthenticated: this.state.authenticated,
+				}}>
 				<div style={{ overflowX: 'hidden' }}>
 					{this.state.showModal && !this.state.authenticated && (
 						<div>
@@ -218,6 +231,8 @@ class App extends React.PureComponent {
 						<div>
 							<Modal>
 								<Preferences
+									country={this.state.country}
+									layout={this.state.layout}
 									setPreferences={this.setPreferences}
 									onPreferencesCloseHandler={
 										this.onPreferencesCloseHandler
@@ -291,9 +306,10 @@ class App extends React.PureComponent {
 										/>
 									)}
 								/>
-								<Route
+								<AuthRoute
 									exact
 									path='/user/bookmarks'
+									isAuthenticated={this.state.authenticated}
 									component={(props) => (
 										<SavedArticlesPage
 											{...props}
@@ -305,7 +321,8 @@ class App extends React.PureComponent {
 										/>
 									)}
 								/>
-								<Route
+								<AuthRoute
+									isAuthenticated={this.state.authenticated}
 									exact
 									path='/user/foryou'
 									component={(props) => (
@@ -319,7 +336,8 @@ class App extends React.PureComponent {
 										/>
 									)}
 								/>
-								<Route
+								<AuthRoute
+									isAuthenticated={this.state.authenticated}
 									exact
 									path='/user/searches'
 									component={(props) => (

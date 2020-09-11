@@ -17,6 +17,7 @@ export class SearchResults extends Component {
 		currentPage: 1,
 		totalPages: null,
 		buttonText: '',
+		empty: false,
 	};
 
 	getData = async () => {
@@ -39,6 +40,10 @@ export class SearchResults extends Component {
 			const resp = await Axios.get('/search' + paramString);
 			let qwe = resp.data.data;
 			let totalPages = Math.ceil(qwe.totalResults / 20);
+
+			if (qwe.totalResults <= 0) {
+				return this.setState({ empty: true, loading: false });
+			}
 			this.setState({
 				articles: qwe.articles,
 				totalResults: qwe.totalResults,
@@ -50,6 +55,7 @@ export class SearchResults extends Component {
 				currentPage: page,
 				totalPages,
 				buttonText: resp.data.isSaved ? 'Saved' : 'Save',
+				empty: false,
 			});
 		} catch (err) {
 			console.log(err.response);
@@ -123,6 +129,12 @@ export class SearchResults extends Component {
 		return (
 			<div>
 				{this.state.loading && <Loading />}
+
+				{this.state.empty && (
+					<p>
+						Nothing to show here. Please try a different search term
+					</p>
+				)}
 
 				{this.state.articles.length > 0 && (
 					<div>

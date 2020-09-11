@@ -31,68 +31,76 @@ class SideBar extends React.Component {
 				<div
 					// class='w3-sidebar w3-bar-block w3-border-right'
 					className='sidenav'
-					style={{ width: this.props.isOpen ? '250px' : '0px' }}>
+					style={{ width: this.props.isOpen ? '270px' : '0px' }}>
 					{/* <button
 						onClick={this.props.closeSidebar}
 						className='closebtn'>
 						Close &times;
 					</button> */}
 
-					<NavLink to='/headlines'>Home</NavLink>
+					<NavLink to='/headlines'>
+						<i class=' pr-4 fas fa-home'></i>Home
+					</NavLink>
+
 					{this.props.isAuthenticated && (
 						<NavLink to='/user/foryou'>
 							{' '}
-							<i class='fas fa-user'></i>For you
+							<i class=' pr-4 fas fa-user'></i>For you
 						</NavLink>
 					)}
 					<NavLink to='/topics?category=business'>
 						{' '}
-						<i className='fas fa-money-check-alt'></i> Business
+						<i className=' pr-4 fas fa-money-check-alt'></i>{' '}
+						Business
 					</NavLink>
 					<NavLink to='/topics?category=health'>
 						{' '}
-						<i className='fas fa-heartbeat'></i> Health
+						<i className=' pr-4 fas fa-heartbeat'></i> Health
 					</NavLink>
 					<NavLink to='/topics?category=entertainment'>
 						{' '}
-						<i class='fas fa-film'></i>Entertainment
+						<i class=' pr-4 fas fa-film'></i>Entertainment
 					</NavLink>
 					<NavLink to='/topics?category=science'>
 						{' '}
-						<i class='fas fa-atom'></i>Science
+						<i class=' pr-4 fas fa-atom'></i>Science
 					</NavLink>
 					<NavLink to='/topics?category=sports'>
 						{' '}
-						<i class='fas fa-baseball-ball'></i>Sports
+						<i class=' pr-4 fas fa-baseball-ball'></i>Sports
 					</NavLink>
 					<NavLink to='/topics?category=technology'>
 						{' '}
-						<i class=' fas fa-microchip'></i>Technology
+						<i class=' pr-4  fas fa-microchip'></i>Technology
 					</NavLink>
 					{this.props.isAuthenticated && (
 						<NavLink to='/user/bookmarks'>
 							{' '}
-							<i class='fas fa-microchip'></i>Saved Articles
+							<i class=' pr-4 fas fa-bookmark'></i>Saved Articles
 						</NavLink>
 					)}
 					{this.props.isAuthenticated && (
 						<NavLink to='/user/searches'>
 							{' '}
-							<i class='fas fa-microchip'></i>Saved Searches
+							<i class=' pr-4 fas fa-search'></i>Saved Searches
 						</NavLink>
 					)}
 
 					{this.props.isAuthenticated && (
-						<button onClick={this.props.onPreferencesOpenHandler}>
+						<button
+							className='sidebar-button'
+							onClick={this.props.onPreferencesOpenHandler}>
 							{' '}
-							<i class='fas fa-microchip'></i>Preferences
+							<i class=' pr-4 fas fa-cog'></i>Preferences
 						</button>
 					)}
 
 					{this.props.isAuthenticated && (
-						<button onClick={this.props.onLogoutHandler}>
+						<button
+							className='sidebar-button'
+							onClick={this.props.onLogoutHandler}>
 							{' '}
-							<i class='fas fa-microchip'></i>Logout
+							<i class=' pr-4 fas fa-sign-out-alt'></i>Logout
 						</button>
 					)}
 				</div>

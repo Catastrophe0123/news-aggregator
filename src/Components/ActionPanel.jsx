@@ -59,9 +59,9 @@ export class ActionPanel extends Component {
 					save this article
 				</span>
 			</MenuItem>
-			<MenuItem disabled={!this.props.isAuthenticated} key='3'>
+			{/* <MenuItem disabled={!this.props.isAuthenticated} key='3'>
 				<span className='cursor-pointer text-base'>{`Hide all stories from ${this.props.sourceName}`}</span>
-			</MenuItem>
+			</MenuItem> */}
 		</Menu>
 	);
 
@@ -76,12 +76,15 @@ export class ActionPanel extends Component {
 					transition: 'all 0.15s ease-in',
 				}}
 				className='mx-2'>
-				<span
-					style={{ transition: 'color 0.1s ease-in' }}
-					onClick={this.props.onBookmarkHandler}
-					className='cursor-pointer mx-2 '>
-					<i className={bookmarkclasses}></i>
-				</span>
+				{this.props.isAuthenticated && (
+					<span
+						style={{ transition: 'color 0.1s ease-in' }}
+						onClick={this.props.onBookmarkHandler}
+						className='cursor-pointer mx-2 '>
+						<i className={bookmarkclasses}></i>
+					</span>
+				)}
+
 				<span onClick={this.copyLink} className='cursor-pointer      '>
 					<i
 						style={{ transition: 'color 0.1s ease-in' }}
