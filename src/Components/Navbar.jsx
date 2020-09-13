@@ -1,20 +1,4 @@
-// import React, { Component } from 'react';
-
-// export class Navbar extends Component {
-// 	render() {
-// 		return (
-// 			<div>
-// 				<h1>hello from navbar component</h1>
-// 			</div>
-// 		);
-// 	}
-// }
-
-// export default Navbar;
-
-// coooooooooooooooooooooooooooooooooo
-
-import React, { useState } from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
 import SearchBar from './SearchBar';
 import SideBar from './SideBar';
@@ -115,6 +99,7 @@ export default class Navbar extends Component {
 					onPreferencesOpenHandler={
 						this.props.onPreferencesOpenHandler
 					}
+					onLoginClickHandler={this.props.onLoginClickHandler}
 					isOpen={this.state.isOpen}
 					openSidebar={this.openSidebar}
 					closeSidebar={this.closeSidebar}
@@ -155,7 +140,7 @@ export default class Navbar extends Component {
 									<button
 										onClick={this.props.onLoginClickHandler}
 										className='border ml-2 font-medium font-sans  bg-blue-500 text-white px-5  py-3 rounded-md  '>
-										<i class='fas fa-sign-in-alt mr-2  '></i>
+										<i className='fas fa-sign-in-alt mr-2  '></i>
 										{this.state.width > 1280 && 'Login'}
 									</button>
 								)}

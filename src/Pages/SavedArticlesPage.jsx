@@ -27,9 +27,6 @@ export class SavedArticlesPage extends Component {
 				urls.push(i.url);
 			}
 
-			console.log('herjsad?');
-			console.log(resp.data);
-
 			this.setState({
 				articles: resp.data.bookmarks,
 				bookmarkURLS: urls,
@@ -44,16 +41,12 @@ export class SavedArticlesPage extends Component {
 
 	onBookmarkHandler = async (article) => {
 		try {
-			console.log('in the bookmark handler back home');
 			let cpyarticles = { ...article };
 			delete cpyarticles.tags;
-			console.log(article);
 			let resp = await Axios.post('/bookmark', { ...cpyarticles });
-			console.log(resp.data);
 
 			let bookmarks = resp.data.userdata.bookmarks;
 			let urls = [];
-			console.log('boyoboy');
 			for (const i of bookmarks) {
 				urls.push(i.url);
 			}
@@ -65,7 +58,6 @@ export class SavedArticlesPage extends Component {
 			});
 			// this.props.refreshUser(bookmarks);
 		} catch (err) {
-			console.log('error');
 			console.log(err.response);
 		}
 	};
@@ -76,18 +68,28 @@ export class SavedArticlesPage extends Component {
 				<h1 className=' mt-3 text-3xl font-medium font-serif flex justify-center w-full'>
 					Your Bookmarks
 				</h1>
-				{this.state.loading && <Loading />}
-				{this.state.articles.length >= 1 ? (
-					<Stories
-						onBookmarkHandler={this.onBookmarkHandler}
-						hideStoryHandler={this.hideStoryHandler}
-						refreshUser={this.props.refreshUser}
-						bookmarkURLS={this.state.bookmarkURLS}
-						articles={this.state.articles}
-						// articles={this.state.bookmarks}
-					/>
+				{this.state.loading ? (
+					<Loading />
 				) : (
-					<p>your bookmarks are shown here</p>
+					<div>
+						{this.state.articles.length >= 1 ? (
+							<Stories
+								onBookmarkHandler={this.onBookmarkHandler}
+								hideStoryHandler={this.hideStoryHandler}
+								refreshUser={this.props.refreshUser}
+								bookmarkURLS={this.state.bookmarkURLS}
+								articles={this.state.articles}
+								// articles={this.state.bookmarks}
+							/>
+						) : (
+							<p
+								style={{
+									width: '100%',
+								}}>
+								your bookmarks are shown here
+							</p>
+						)}
+					</div>
 				)}
 			</div>
 		);

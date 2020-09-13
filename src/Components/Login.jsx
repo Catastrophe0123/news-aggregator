@@ -19,7 +19,6 @@ export class Login extends Component {
 		try {
 			const { email, password } = this.state;
 			let resp = await Axios.post('/login', { email, password });
-			console.log(resp.data);
 			let token = resp.data.token;
 			let { bookmarks, layout, country } = resp.data.user;
 			let mail = resp.data.user.email;
@@ -32,8 +31,6 @@ export class Login extends Component {
 					country
 				);
 			});
-
-			console.log('login successful');
 		} catch (err) {
 			console.log(err.response);
 			this.setState({ errors: err.response.data.errors[0].message });
@@ -44,14 +41,12 @@ export class Login extends Component {
 		try {
 			const { email, password } = this.state;
 			let resp = await Axios.post('/signup', { email, password });
-			console.log(resp.data);
 			let token = resp.data.token;
 			let { bookmarks, layout } = resp.data.newUser;
 			let mail = resp.data.newUser.email;
 			this.setState({ errors: null }, () => {
 				this.props.loginSuccessHandler(token, mail, bookmarks, layout);
 			});
-			console.log('signup successful');
 		} catch (err) {
 			console.log(err.response);
 			this.setState({ errors: err.response.data.errors[0].message });

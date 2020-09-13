@@ -9,7 +9,6 @@ export class PersonalizedNewsPage extends Component {
 	componentDidMount = async () => {
 		try {
 			const resp = await Axios.get('/foryou');
-			console.log(resp);
 			let bookmarks = resp.data.bookmarks;
 
 			let urls = [];
@@ -30,16 +29,12 @@ export class PersonalizedNewsPage extends Component {
 
 	onBookmarkHandler = async (article) => {
 		try {
-			console.log('in the bookmark handler back home');
 			let cpyarticles = { ...article };
 			delete cpyarticles.tags;
-			console.log(article);
 			let resp = await Axios.post('/bookmark', { ...cpyarticles });
-			console.log(resp.data);
 
 			let bookmarks = resp.data.userdata.bookmarks;
 			let urls = [];
-			console.log('boyoboy');
 			for (const i of bookmarks) {
 				urls.push(i.url);
 			}
@@ -51,7 +46,6 @@ export class PersonalizedNewsPage extends Component {
 			});
 			// this.props.refreshUser(bookmarks);
 		} catch (err) {
-			console.log('error');
 			console.log(err.response);
 		}
 	};

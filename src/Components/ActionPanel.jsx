@@ -2,8 +2,6 @@ import React, { Component } from 'react';
 import '../styles/ActionPanel.css';
 // import Dropdown from './Dropdown';
 
-import Axios from '../utils/axiosInstance';
-
 import Dropdown from 'rc-dropdown';
 import Menu, { Item as MenuItem, Divider } from 'rc-menu';
 import 'rc-dropdown/assets/index.css';
@@ -65,9 +63,9 @@ export class ActionPanel extends Component {
 		}
 	};
 
-	onVisibleChange = (visible) => {
-		console.log(visible);
-	};
+	// onVisibleChange = (visible) => {
+	// 	console.log(visible);
+	// };
 
 	menu = () => (
 		<Menu selectedKeys={[]} onSelect={this.onSelect}>
@@ -119,7 +117,7 @@ export class ActionPanel extends Component {
 				<span onClick={this.copyLink} className='cursor-pointer      '>
 					<i
 						style={{ transition: 'color 0.1s ease-in' }}
-						class={`fas px-2 fa-link ${
+						className={`fas px-2 fa-link ${
 							this.state.copied && 'text-blue-600'
 						}  `}></i>
 				</span>
@@ -129,7 +127,7 @@ export class ActionPanel extends Component {
 					animation='slide-up'
 					onVisibleChange={this.onVisibleChange}>
 					<button className='cursor-pointer mx-2     '>
-						<i class='fas px-2 fa-ellipsis-v'></i>
+						<i className='fas px-2 fa-ellipsis-v'></i>
 					</button>
 				</Dropdown>
 				{/* <Dropdown color='white' /> */}

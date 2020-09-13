@@ -1,5 +1,4 @@
 import React from 'react';
-import logo from './logo.svg';
 import './styles/app.css';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import Home from './Pages/Home';
@@ -22,7 +21,7 @@ import AuthRoute from './Components/AuthRoute';
 class App extends React.PureComponent {
 	state = {
 		showModal: false,
-		authenticated: false,
+		authenticated: null,
 		email: null,
 		token: null,
 		bookmarks: [],
@@ -66,7 +65,6 @@ class App extends React.PureComponent {
 			// 	authenticated: false,
 			// 	token: '',
 			// });
-			console.log('logging out');
 			this.logout();
 
 			// window.location.href = '/login';
@@ -101,12 +99,10 @@ class App extends React.PureComponent {
 		let country = localStorage.country;
 		if (bookmarks) bookmarks = JSON.parse(bookmarks);
 
-		console.log(bookmarks);
 		let authenticated = false;
 		if (token && email) {
 			const decodedToken = JwtDecode(token);
 			if (decodedToken.exp * 1000 < Date.now()) {
-				console.log('expired token');
 				authenticated = false;
 				this.setState({ authenticated });
 			} else {
@@ -134,6 +130,7 @@ class App extends React.PureComponent {
 					layout,
 					country,
 					bookmarkURLS: urls,
+					valuesSet: true,
 				});
 			}
 		}
@@ -193,7 +190,6 @@ class App extends React.PureComponent {
 			country,
 		});
 		this.refreshUser(bookmarks);
-		console.log('authenticated');
 	};
 
 	setPreferences = (country, layout) => {
@@ -375,6 +371,18 @@ class App extends React.PureComponent {
 									path='/topics'
 									component={(props) => (
 										<CategoryPage
+											{...props}
+											bookmarkURLS={
+												this.state.bookmarkURLS
+											}
+											refreshUser={this.refreshUser}
+										/>
+									)}
+								/>
+								<Route
+									path='/'
+									component={(props) => (
+										<Home
 											{...props}
 											bookmarkURLS={
 												this.state.bookmarkURLS

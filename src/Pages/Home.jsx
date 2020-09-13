@@ -6,7 +6,6 @@ import Loading from '../Components/Loading';
 import { Link } from 'react-router-dom';
 
 import PaginationButton from '../Components/PaginationButton';
-import HorizontalTabs from '../Components/HorizontalTabs';
 
 export class Home extends Component {
 	state = {
@@ -21,16 +20,12 @@ export class Home extends Component {
 
 	onBookmarkHandler = async (article) => {
 		try {
-			console.log('in the bookmark handler back home');
 			let cpyarticles = { ...article };
 			delete cpyarticles.tags;
-			console.log(article);
 			let resp = await axios.post('/bookmark', { ...cpyarticles });
-			console.log(resp.data);
 
 			let bookmarks = resp.data.userdata.bookmarks;
 			let urls = [];
-			console.log('boyoboy');
 			for (const i of bookmarks) {
 				urls.push(i.url);
 			}
@@ -42,7 +37,6 @@ export class Home extends Component {
 			});
 			// this.props.refreshUser(bookmarks);
 		} catch (err) {
-			console.log('error');
 			console.log(err.response);
 		}
 	};
@@ -54,7 +48,6 @@ export class Home extends Component {
 	}
 
 	fetchHeadlines = async () => {
-		console.log('fetching from api');
 		let paramString = this.props.location.search;
 		let params = new URLSearchParams(paramString);
 		let page = Number(params.get('page'));
@@ -126,7 +119,7 @@ export class Home extends Component {
 
 	componentDidUpdate = async (prevProps, prevState) => {
 		let paramString = this.props.location.search;
-		if (prevProps.location.search != paramString) {
+		if (prevProps.location.search !== paramString) {
 			this.setState({
 				loading: true,
 				paramString: paramString,

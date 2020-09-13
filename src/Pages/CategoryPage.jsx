@@ -3,7 +3,7 @@ import Axios from '../utils/axiosInstance';
 
 import Stories from '../Components/Stories';
 import Loading from '../Components/Loading';
-import Button, { PaginationButton } from '../Components/PaginationButton';
+import { PaginationButton } from '../Components/PaginationButton';
 
 import { Link } from 'react-router-dom';
 import HorizontalTabs from '../Components/HorizontalTabs';
@@ -25,16 +25,12 @@ export class CategoryPage extends Component {
 
 	onBookmarkHandler = async (article) => {
 		try {
-			console.log('in the bookmark handler back home');
 			let cpyarticles = { ...article };
 			delete cpyarticles.tags;
-			console.log(article);
 			let resp = await Axios.post('/bookmark', { ...cpyarticles });
-			console.log(resp.data);
 
 			let bookmarks = resp.data.userdata.bookmarks;
 			let urls = [];
-			console.log('boyoboy');
 			for (const i of bookmarks) {
 				urls.push(i.url);
 			}
@@ -46,7 +42,6 @@ export class CategoryPage extends Component {
 			});
 			// this.props.refreshUser(bookmarks);
 		} catch (err) {
-			console.log('error');
 			console.log(err.response);
 		}
 	};
@@ -114,14 +109,11 @@ export class CategoryPage extends Component {
 			let paramString = this.props.location.search;
 
 			let params = new URLSearchParams(paramString);
-			console.log(params);
-			console.log(params.toString());
-			console.log(params);
+
 			let search = params.get('category');
 			let page = Number(params.get('page'));
 			if (!page) page = 1;
 			// const resp = await Axios.get('/search', { params: { ...params } });
-			console.log('/search' + paramString);
 			const resp = await Axios.get('/headlines' + paramString);
 			let totalPages = Math.ceil(resp.data.data.totalResults / 20);
 
@@ -152,10 +144,6 @@ export class CategoryPage extends Component {
 		let paramString = this.props.location.search;
 
 		let params = new URLSearchParams(paramString);
-		console.log(params);
-		console.log(params.toString());
-		console.log(params);
-		let search = params.get('category');
 
 		// switch (search) {
 		// 	case 'business':
@@ -170,8 +158,7 @@ export class CategoryPage extends Component {
 
 	componentDidUpdate = async (prevProps, prevState) => {
 		let paramString = this.props.location.search;
-		if (prevProps.location.search != paramString) {
-			console.log('im rinngin?');
+		if (prevProps.location.search !== paramString) {
 			this.setState({
 				loading: true,
 				paramString: paramString,
@@ -193,8 +180,7 @@ export class CategoryPage extends Component {
 			const resp = await Axios.get('/search', {
 				params: { sortBy: 'publishedAt', q: topic },
 			});
-			console.log('over here');
-			console.log(resp);
+
 			let totalPages = Math.ceil(resp.data.data.totalResults / 20);
 			this.setState({
 				articles: resp.data.data.articles,

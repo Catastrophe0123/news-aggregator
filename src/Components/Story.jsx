@@ -5,7 +5,6 @@ import Tag from './Tag';
 import '../styles/story.css';
 import { Link } from 'react-router-dom';
 import ActionPanel from './ActionPanel';
-import Axios from '../utils/axiosInstance';
 
 export class Story extends Component {
 	state = { isHovering: false };
@@ -149,8 +148,8 @@ export class Story extends Component {
 							)}
 							{this.props.tags && (
 								<div className='flex flex-wrap mt-3 '>
-									{this.props.tags.map((tag) => (
-										<Tag tagname={tag} />
+									{this.props.tags.map((tag, idx) => (
+										<Tag key={idx} tagname={tag} />
 									))}
 								</div>
 							)}

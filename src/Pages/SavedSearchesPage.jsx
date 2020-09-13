@@ -20,7 +20,6 @@ export class SavedSearchesPage extends Component {
 			const resp = await Axios.post('/search/save', {
 				searchString: savedSearch,
 			});
-			console.log(resp.data);
 			this.setState({ savedSearches: resp.data.userData.savedSearches });
 		} catch (err) {
 			console.log(err);

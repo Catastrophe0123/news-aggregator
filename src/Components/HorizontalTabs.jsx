@@ -3,19 +3,6 @@ import ScrollMenu from 'react-horizontal-scrolling-menu';
 // import './App.css';
 import '../App.css';
 
-// list of items
-const list = [
-	{ name: 'item1' },
-	{ name: 'item2' },
-	{ name: 'item3' },
-	{ name: 'item4' },
-	{ name: 'item5' },
-	{ name: 'item6' },
-	{ name: 'item7' },
-	{ name: 'item8' },
-	{ name: 'item9' },
-];
-
 // One item component
 // selected prop will be passed
 const MenuItem = ({ text, selected }) => {
@@ -54,7 +41,6 @@ export default class HorizontalTabs extends Component {
 	};
 
 	onSelect = (key) => {
-		console.log('keys: ', key);
 		this.setState({ selected: key }, () => {
 			this.props.changeTopic(key);
 		});

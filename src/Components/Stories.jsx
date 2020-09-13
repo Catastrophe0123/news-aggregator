@@ -4,8 +4,6 @@ import Story from './Story';
 import '../styles/Stories.css';
 import MyContext from '../utils/MyContext';
 
-import Axios from '../utils/axiosInstance';
-
 export class Stories extends Component {
 	constructor(props) {
 		super(props);
@@ -90,7 +88,7 @@ export class Stories extends Component {
 											<div
 												className='flex xl:max-w-sm lg:max-w-xs md:max-w-xs sm:max-w-lg '
 												// className=' '
-											>
+												key={idx}>
 												<Story
 													isAuthenticated={
 														isAuthenticated

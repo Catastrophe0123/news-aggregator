@@ -3,7 +3,7 @@ import Axios from '../utils/axiosInstance';
 
 import Stories from '../Components/Stories';
 import Loading from '../Components/Loading';
-import Button, { PaginationButton } from '../Components/PaginationButton';
+import { PaginationButton } from '../Components/PaginationButton';
 
 import { Link } from 'react-router-dom';
 
@@ -24,16 +24,12 @@ export class SearchResults extends Component {
 
 	onBookmarkHandler = async (article) => {
 		try {
-			console.log('in the bookmark handler back home');
 			let cpyarticles = { ...article };
 			delete cpyarticles.tags;
-			console.log(article);
 			let resp = await Axios.post('/bookmark', { ...cpyarticles });
-			console.log(resp.data);
 
 			let bookmarks = resp.data.userdata.bookmarks;
 			let urls = [];
-			console.log('boyoboy');
 			for (const i of bookmarks) {
 				urls.push(i.url);
 			}
@@ -45,7 +41,6 @@ export class SearchResults extends Component {
 			});
 			// this.props.refreshUser(bookmarks);
 		} catch (err) {
-			console.log('error');
 			console.log(err.response);
 		}
 	};
@@ -57,15 +52,12 @@ export class SearchResults extends Component {
 			let paramString = this.props.location.search;
 
 			let params = new URLSearchParams(paramString);
-			console.log(params);
-			console.log(params.toString());
-			console.log(params);
+
 			let search = params.get('q');
 			let source = params.get('sources');
 			let page = Number(params.get('page'));
 			if (!page) page = 1;
 			// const resp = await Axios.get('/search', { params: { ...params } });
-			console.log('/search' + paramString);
 
 			const resp = await Axios.get('/search' + paramString);
 			let qwe = resp.data.data;
@@ -108,8 +100,7 @@ export class SearchResults extends Component {
 
 	componentDidUpdate = async (prevProps, prevState) => {
 		let paramString = this.props.location.search;
-		if (prevProps.location.search != paramString) {
-			console.log('im running over ghere');
+		if (prevProps.location.search !== paramString) {
 			this.setState({
 				loading: true,
 				paramString: paramString,
@@ -131,12 +122,10 @@ export class SearchResults extends Component {
 	onSaveSearchHandler = async () => {
 		// code
 		try {
-			console.log('hereoiqwjn');
 			this.setState({ buttonText: 'Loading' });
 			let resp = await Axios.post('/search/save', {
 				searchString: this.state.search,
 			});
-			console.log(resp);
 			if (resp.status === 200) {
 				// unsave
 				//change button text to Save

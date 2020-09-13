@@ -3,7 +3,7 @@ import axios from 'axios';
 // Next we make an 'instance' of it
 const instance = axios.create({
 	// .. where we make our configurations
-	baseURL: 'http://localhost:4000/',
+	baseURL: 'https://my-news-aggregator1.herokuapp.com/',
 });
 
 // Where you would set stuff like your 'Authorization' header, etc ...

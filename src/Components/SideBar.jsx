@@ -1,11 +1,8 @@
 import React from 'react';
-// import Sidebar from 'react-sidebar';
 import '../styles/sidebar.css';
 
-import { slide as Menu } from 'react-burger-menu';
 import { NavLink } from 'react-router-dom';
 import BackDrop from './BackDrop';
-import Modal from './Modal';
 
 class SideBar extends React.Component {
 	state = { isOpen: false, isPreferencesOpen: false };
@@ -39,13 +36,13 @@ class SideBar extends React.Component {
 					</button> */}
 
 					<NavLink to='/headlines'>
-						<i class=' pr-4 fas fa-home'></i>Home
+						<i className=' pr-4 fas fa-home'></i>Home
 					</NavLink>
 
 					{this.props.isAuthenticated && (
 						<NavLink to='/user/foryou'>
 							{' '}
-							<i class=' pr-4 fas fa-user'></i>For you
+							<i className=' pr-4 fas fa-user'></i>For you
 						</NavLink>
 					)}
 					<NavLink to='/topics?category=business'>
@@ -59,30 +56,32 @@ class SideBar extends React.Component {
 					</NavLink>
 					<NavLink to='/topics?category=entertainment'>
 						{' '}
-						<i class=' pr-4 fas fa-film'></i>Entertainment
+						<i className=' pr-4 fas fa-film'></i>Entertainment
 					</NavLink>
 					<NavLink to='/topics?category=science'>
 						{' '}
-						<i class=' pr-4 fas fa-atom'></i>Science
+						<i className=' pr-4 fas fa-atom'></i>Science
 					</NavLink>
 					<NavLink to='/topics?category=sports'>
 						{' '}
-						<i class=' pr-4 fas fa-baseball-ball'></i>Sports
+						<i className=' pr-4 fas fa-baseball-ball'></i>Sports
 					</NavLink>
 					<NavLink to='/topics?category=technology'>
 						{' '}
-						<i class=' pr-4  fas fa-microchip'></i>Technology
+						<i className=' pr-4  fas fa-microchip'></i>Technology
 					</NavLink>
 					{this.props.isAuthenticated && (
 						<NavLink to='/user/bookmarks'>
 							{' '}
-							<i class=' pr-4 fas fa-bookmark'></i>Saved Articles
+							<i className=' pr-4 fas fa-bookmark'></i>Saved
+							Articles
 						</NavLink>
 					)}
 					{this.props.isAuthenticated && (
 						<NavLink to='/user/searches'>
 							{' '}
-							<i class=' pr-4 fas fa-search'></i>Saved Searches
+							<i className=' pr-4 fas fa-search'></i>Saved
+							Searches
 						</NavLink>
 					)}
 
@@ -91,7 +90,16 @@ class SideBar extends React.Component {
 							className='sidebar-button'
 							onClick={this.props.onPreferencesOpenHandler}>
 							{' '}
-							<i class=' pr-4 fas fa-cog'></i>Preferences
+							<i className=' pr-4 fas fa-cog'></i>Preferences
+						</button>
+					)}
+
+					{!this.props.isAuthenticated && (
+						<button
+							className='sidebar-button'
+							onClick={this.props.onLoginClickHandler}>
+							{' '}
+							<i className=' pr-4 fas fa-sign-in-alt'></i>Login
 						</button>
 					)}
 
@@ -100,7 +108,7 @@ class SideBar extends React.Component {
 							className='sidebar-button'
 							onClick={this.props.onLogoutHandler}>
 							{' '}
-							<i class=' pr-4 fas fa-sign-out-alt'></i>Logout
+							<i className=' pr-4 fas fa-sign-out-alt'></i>Logout
 						</button>
 					)}
 				</div>
