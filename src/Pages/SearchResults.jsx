@@ -18,6 +18,36 @@ export class SearchResults extends Component {
 		totalPages: null,
 		buttonText: '',
 		empty: false,
+		bookmarkURLS: [],
+		bookmarks: [],
+	};
+
+	onBookmarkHandler = async (article) => {
+		try {
+			console.log('in the bookmark handler back home');
+			let cpyarticles = { ...article };
+			delete cpyarticles.tags;
+			console.log(article);
+			let resp = await Axios.post('/bookmark', { ...cpyarticles });
+			console.log(resp.data);
+
+			let bookmarks = resp.data.userdata.bookmarks;
+			let urls = [];
+			console.log('boyoboy');
+			for (const i of bookmarks) {
+				urls.push(i.url);
+			}
+			this.setState((st) => {
+				return {
+					bookmarks: bookmarks,
+					bookmarkURLS: urls,
+				};
+			});
+			// this.props.refreshUser(bookmarks);
+		} catch (err) {
+			console.log('error');
+			console.log(err.response);
+		}
 	};
 
 	getData = async () => {
@@ -44,6 +74,14 @@ export class SearchResults extends Component {
 			if (qwe.totalResults <= 0) {
 				return this.setState({ empty: true, loading: false });
 			}
+
+			let bookmarks = resp.data.bookmarks;
+
+			let urls = [];
+			for (const i of bookmarks) {
+				urls.push(i.url);
+			}
+
 			this.setState({
 				articles: qwe.articles,
 				totalResults: qwe.totalResults,
@@ -56,6 +94,8 @@ export class SearchResults extends Component {
 				totalPages,
 				buttonText: resp.data.isSaved ? 'Saved' : 'Save',
 				empty: false,
+				bookmarks: bookmarks,
+				bookmarkURLS: urls,
 			});
 		} catch (err) {
 			console.log(err.response);
@@ -202,9 +242,10 @@ export class SearchResults extends Component {
 
 						<Stories
 							hideStoryHandler={this.hideStoryHandler}
-							bookmarkURLS={this.props.bookmarkURLS}
+							bookmarkURLS={this.state.bookmarkURLS}
 							refreshUser={this.props.refreshUser}
 							articles={this.state.articles}
+							onBookmarkHandler={this.onBookmarkHandler}
 						/>
 						<div className='flex justify-center my-5 m-3  w-full'>
 							{prevDisabled ? (

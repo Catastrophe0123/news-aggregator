@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import '../styles/ActionPanel.css';
 // import Dropdown from './Dropdown';
 
+import Axios from '../utils/axiosInstance';
+
 import Dropdown from 'rc-dropdown';
 import Menu, { Item as MenuItem, Divider } from 'rc-menu';
 import 'rc-dropdown/assets/index.css';
@@ -9,7 +11,11 @@ import { withRouter } from 'react-router-dom';
 // import 'rc-menu/assets/index.css';
 
 export class ActionPanel extends Component {
-	state = { copied: false };
+	state = { copied: false, bookmarked: false, loading: false };
+
+	// componentDidMount = () => {
+	// 	this.setState({ bookmarked: this.props.bookmarked });
+	// };
 
 	copyLink = () => {
 		navigator.clipboard.writeText(this.props.articleURL);
@@ -20,6 +26,27 @@ export class ActionPanel extends Component {
 		this.props.history.push(`/search?sources=${source}`);
 	};
 
+	// onBookmarkHandler = async () => {
+	// 	try {
+	// 		this.setState({ loading: true });
+	// 		let resp = await Axios.post('/bookmark', { ...this.props });
+	// 		console.log(resp.data);
+
+	// 		let bookmarks = resp.data.userdata.bookmarks;
+	// 		console.log('yoyoyo : ', bookmarks);
+	// 		this.setState((st) => {
+	// 			return {
+	// 				loading: false,
+	// 				bookmarked: !st.bookmarked,
+	// 			};
+	// 		});
+	// 		// this.props.refreshUser(bookmarks);
+	// 	} catch (err) {
+	// 		console.log('error');
+	// 		console.log(err.response);
+	// 	}
+	// };
+
 	onSelect = ({ key, ...x }) => {
 		switch (key) {
 			case '0':
@@ -29,7 +56,8 @@ export class ActionPanel extends Component {
 				this.goToSourceHandler(this.props.sourceId);
 				break;
 			case '2':
-				this.props.onBookmarkHandler();
+				// delete this.props.article.tags;
+				this.props.onBookmarkHandler(this.props.article);
 				break;
 			case '3':
 				this.props.removeSourceHandler();
@@ -78,8 +106,11 @@ export class ActionPanel extends Component {
 				className='mx-2'>
 				{this.props.isAuthenticated && (
 					<span
+						// disabled={this.state.loading}
 						style={{ transition: 'color 0.1s ease-in' }}
-						onClick={this.props.onBookmarkHandler}
+						onClick={() =>
+							this.props.onBookmarkHandler(this.props.article)
+						}
 						className='cursor-pointer mx-2 '>
 						<i className={bookmarkclasses}></i>
 					</span>

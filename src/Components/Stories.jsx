@@ -4,6 +4,8 @@ import Story from './Story';
 import '../styles/Stories.css';
 import MyContext from '../utils/MyContext';
 
+import Axios from '../utils/axiosInstance';
+
 export class Stories extends Component {
 	constructor(props) {
 		super(props);
@@ -58,12 +60,16 @@ export class Stories extends Component {
 												bookmarked={this.props.bookmarkURLS.includes(
 													el.url
 												)}
+												onBookmarkHandler={
+													this.props.onBookmarkHandler
+												}
 												refreshUser={
 													this.props.refreshUser
 												}
 												key={idx}
 												idkey={idx}
 												{...el}
+												article={el}
 											/>
 										))}
 									</div>
@@ -82,30 +88,35 @@ export class Stories extends Component {
 										}>
 										{this.props.articles.map((el, idx) => (
 											<div
-											// className='flex xl:max-w-sm lg:max-w-xs md:max-w-xs sm:max-w-lg '
-											// className=' '
+												className='flex xl:max-w-sm lg:max-w-xs md:max-w-xs sm:max-w-lg '
+												// className=' '
 											>
 												<Story
 													isAuthenticated={
 														isAuthenticated
 													}
-													cardView={cardView}
 													hideStoryHandler={
 														this.props
 															.hideStoryHandler
 													}
+													cardView={cardView}
 													bookmarkURLS={
 														this.props.bookmarkURLS
 													}
 													bookmarked={this.props.bookmarkURLS.includes(
 														el.url
 													)}
+													onBookmarkHandler={
+														this.props
+															.onBookmarkHandler
+													}
 													refreshUser={
 														this.props.refreshUser
 													}
 													key={idx}
 													idkey={idx}
 													{...el}
+													article={el}
 												/>
 											</div>
 										))}

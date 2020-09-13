@@ -19,6 +19,36 @@ export class CategoryPage extends Component {
 		currentTopic: 'Latest',
 		loadingSubTopic: false,
 		subtopicList: null,
+		bookmarks: [],
+		bookmarkURLS: [],
+	};
+
+	onBookmarkHandler = async (article) => {
+		try {
+			console.log('in the bookmark handler back home');
+			let cpyarticles = { ...article };
+			delete cpyarticles.tags;
+			console.log(article);
+			let resp = await Axios.post('/bookmark', { ...cpyarticles });
+			console.log(resp.data);
+
+			let bookmarks = resp.data.userdata.bookmarks;
+			let urls = [];
+			console.log('boyoboy');
+			for (const i of bookmarks) {
+				urls.push(i.url);
+			}
+			this.setState((st) => {
+				return {
+					bookmarks: bookmarks,
+					bookmarkURLS: urls,
+				};
+			});
+			// this.props.refreshUser(bookmarks);
+		} catch (err) {
+			console.log('error');
+			console.log(err.response);
+		}
 	};
 
 	businessSubTopics = [
@@ -93,15 +123,25 @@ export class CategoryPage extends Component {
 			// const resp = await Axios.get('/search', { params: { ...params } });
 			console.log('/search' + paramString);
 			const resp = await Axios.get('/headlines' + paramString);
-			let totalPages = Math.ceil(resp.data.totalResults / 20);
+			let totalPages = Math.ceil(resp.data.data.totalResults / 20);
+
+			let bookmarks = resp.data.bookmarks;
+
+			let urls = [];
+			for (const i of bookmarks) {
+				urls.push(i.url);
+			}
+
 			this.setState({
-				articles: resp.data.articles,
-				totalResults: resp.data.totalResults,
+				articles: resp.data.data.articles,
+				totalResults: resp.data.data.totalResults,
 				loading: false,
 				paramString,
 				search: search,
 				currentPage: page,
 				totalPages,
+				bookmarks,
+				bookmarkURLS: urls,
 			});
 		} catch (err) {
 			console.log(err.response);
@@ -217,8 +257,9 @@ export class CategoryPage extends Component {
 						{!this.state.loadingSubTopic ? (
 							<div>
 								<Stories
+									onBookmarkHandler={this.onBookmarkHandler}
 									hideStoryHandler={this.hideStoryHandler}
-									bookmarkURLS={this.props.bookmarkURLS}
+									bookmarkURLS={this.state.bookmarkURLS}
 									refreshUser={this.props.refreshUser}
 									articles={this.state.articles}
 								/>

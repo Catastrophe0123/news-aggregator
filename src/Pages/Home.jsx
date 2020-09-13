@@ -15,6 +15,36 @@ export class Home extends Component {
 		loading: true,
 		totalPages: null,
 		currentPage: 1,
+		bookmarks: [],
+		bookmarkURLS: [],
+	};
+
+	onBookmarkHandler = async (article) => {
+		try {
+			console.log('in the bookmark handler back home');
+			let cpyarticles = { ...article };
+			delete cpyarticles.tags;
+			console.log(article);
+			let resp = await axios.post('/bookmark', { ...cpyarticles });
+			console.log(resp.data);
+
+			let bookmarks = resp.data.userdata.bookmarks;
+			let urls = [];
+			console.log('boyoboy');
+			for (const i of bookmarks) {
+				urls.push(i.url);
+			}
+			this.setState((st) => {
+				return {
+					bookmarks: bookmarks,
+					bookmarkURLS: urls,
+				};
+			});
+			// this.props.refreshUser(bookmarks);
+		} catch (err) {
+			console.log('error');
+			console.log(err.response);
+		}
 	};
 
 	diffMinutes(dt2, dt1) {
@@ -34,14 +64,23 @@ export class Home extends Component {
 		let resp = await axios.get('/headlines', {
 			params: { page: page },
 		});
-		console.log(resp.data);
+		// console.log(resp.data);
+
+		let bookmarks = resp.data.bookmarks;
+
+		let urls = [];
+		for (const i of bookmarks) {
+			urls.push(i.url);
+		}
 
 		this.setState({
-			articles: resp.data.articles,
-			totalResults: resp.data.totalResults,
-			totalPages: Math.ceil(resp.data.totalResults / 20),
+			articles: resp.data.data.articles,
+			totalResults: resp.data.data.totalResults,
+			totalPages: Math.ceil(resp.data.data.totalResults / 20),
 			loading: false,
 			currentPage: page,
+			bookmarks: bookmarks,
+			bookmarkURLS: urls,
 		});
 		let headlines = { data: resp.data, storageTime: new Date() };
 		localStorage.setItem('headlines', JSON.stringify(headlines));
@@ -130,10 +169,11 @@ export class Home extends Component {
 					<div>
 						<Stories
 							// cardView={false}
+							onBookmarkHandler={this.onBookmarkHandler}
 							hideStoryHandler={this.hideStoryHandler}
-							bookmarkURLS={this.props.bookmarkURLS}
 							refreshUser={this.props.refreshUser}
 							articles={this.state.articles}
+							bookmarkURLS={this.state.bookmarkURLS}
 						/>
 						<div className='flex justify-center my-5 m-3  w-full'>
 							{prevDisabled ? (

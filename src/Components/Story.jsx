@@ -10,19 +10,6 @@ import Axios from '../utils/axiosInstance';
 export class Story extends Component {
 	state = { isHovering: false };
 
-	onBookmarkHandler = async () => {
-		try {
-			let resp = await Axios.post('/bookmark', { ...this.props });
-			console.log(resp.data);
-			let bookmarks = resp.data.userdata.bookmarks;
-			console.log('yoyoyo : ', bookmarks);
-			this.props.refreshUser(bookmarks);
-		} catch (err) {
-			console.log('error');
-			console.log(err.response);
-		}
-	};
-
 	render() {
 		dayjs.extend(RelativeTime);
 
@@ -72,10 +59,13 @@ export class Story extends Component {
 								{dayjs(this.props.publishedAt).fromNow(true)}{' '}
 								ago{' '}
 								<ActionPanel
+									article={this.props.article}
 									isAuthenticated={this.props.isAuthenticated}
 									isHovering={this.state.isHovering}
 									bookmarked={this.props.bookmarked}
-									onBookmarkHandler={this.onBookmarkHandler}
+									onBookmarkHandler={
+										this.props.onBookmarkHandler
+									}
 									goToSourceHandler={this.goToSourceHandler}
 									hideStoryHandler={
 										this.props.hideStoryHandler
@@ -128,31 +118,14 @@ export class Story extends Component {
 								&#183;{' '}
 								{dayjs(this.props.publishedAt).fromNow(true)}{' '}
 								ago{' '}
-								{/* {this.state.isHovering && (
-									<ActionPanel
-										bookmarked={this.props.bookmarked}
-										onBookmarkHandler={
-											this.onBookmarkHandler
-										}
-										goToSourceHandler={
-											this.goToSourceHandler
-										}
-										hideStoryHandler={
-											this.props.hideStoryHandler
-										}
-										storyId={this.props.idkey}
-										sourceId={this.props.source.id}
-										sourceName={this.props.source.name}
-										userCopied={this.userCopied}
-										articleURL={this.props.url}
-										removeSourceHandler={() => {}}
-									/>
-								)} */}
 								<ActionPanel
+									article={this.props.article}
 									isAuthenticated={this.props.isAuthenticated}
 									isHovering={this.state.isHovering}
 									bookmarked={this.props.bookmarked}
-									onBookmarkHandler={this.onBookmarkHandler}
+									onBookmarkHandler={
+										this.props.onBookmarkHandler
+									}
 									goToSourceHandler={this.goToSourceHandler}
 									hideStoryHandler={
 										this.props.hideStoryHandler
