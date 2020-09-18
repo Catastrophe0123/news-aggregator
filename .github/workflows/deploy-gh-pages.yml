@@ -22,6 +22,8 @@ jobs:
       # Runs a single command using the runners shell
       - name: set remote github
         run:  git remote set-url origin https://${{ secrets.GITHUBTOKEN }}@github.com/Catastrophe0123/news-aggregator.git
+      - run: git config --global user.email "ci@githubaction.com"
+      - run: git config --global user.name "githubaction"
       - name: install dependencies
         run: npm install
       - name: run deploy script
