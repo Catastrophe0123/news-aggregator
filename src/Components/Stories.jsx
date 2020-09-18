@@ -27,7 +27,10 @@ export class Stories extends Component {
 	render() {
 		if (this.props.articles.length <= 0) {
 			return (
-				<p>Nothing to show here. Please try a different search term</p>
+				<p>
+					Nothing to show here. Please try with a different search
+					term
+				</p>
 			);
 		}
 

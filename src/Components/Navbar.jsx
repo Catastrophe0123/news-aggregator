@@ -112,7 +112,7 @@ export default class Navbar extends Component {
 							{this.Hamburger}
 							{this.state.width >= 660 && (
 								<Link
-									to='/'
+									to='/headlines'
 									className=' ml-10 text-sm text-black font-bold leading-relaxed  mr-4  whitespace-no-wrap uppercase'>
 									News Aggregator
 								</Link>
