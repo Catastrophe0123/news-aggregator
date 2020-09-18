@@ -1,6 +1,10 @@
-# News Aggregator
+# News Aggregator  
+[![Build Status](https://github.com/Catastrophe0123/news-aggregator/workflows/deploy-gh-pages/badge.svg)](https://github.com/Catastrophe0123/news-aggregator/actions?query=workflow%3Adeploy-gh-pages)
+
 
 It is a web application built in react that aggregates news from various sources through the newsapi - similar to google news.
+
+
 
 It is currently hosted in
 [github static pages](https://catastrophe0123.github.io/news-aggregator/)
