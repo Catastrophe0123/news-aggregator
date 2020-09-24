@@ -60,6 +60,8 @@ export class ActionPanel extends Component {
 			case '3':
 				this.props.removeSourceHandler();
 				break;
+			default:
+				return;
 		}
 	};
 
