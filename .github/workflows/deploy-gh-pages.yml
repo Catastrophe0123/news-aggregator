@@ -24,8 +24,14 @@ jobs:
         run:  git remote set-url origin https://${{ secrets.GITHUBTOKEN }}@github.com/Catastrophe0123/news-aggregator.git
       - run: git config --global user.email "ci@githubaction.com"
       - run: git config --global user.name "githubaction"
-      - name: install dependencies
-        run: npm install
+      - name: Cypress run
+        uses: cypress-io/github-action@v1
+        with:
+          build: npm run build
+          start: npm start
+          wait-on: http://localhost:3000
+#       - name: install dependencies
+#         run: npm install
       - name: run deploy script
         continue-on-error: true
         run: npm run deploy
