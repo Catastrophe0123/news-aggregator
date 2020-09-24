@@ -29,13 +29,12 @@ jobs:
             - uses: actions/checkout@v2
             - name: Cypress run
               uses: cypress-io/github-action@v1
-              continue-on-error: true
               with:
                   record: true
                   parallel: true
                   group: 'Actions example'
-                  build: npm run build
-                  start: npm start
+                  build: yarn build
+                  start: yarn start
                   wait-on: http://localhost:3000
               env:
                   # pass the Dashboard record key as an environment variable

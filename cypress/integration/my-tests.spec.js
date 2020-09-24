@@ -19,7 +19,7 @@ describe('working with cypress', () => {
 	it('loads headlines', () => {
 		cy.visit('http://localhost:3000/news-aggregator');
 
-		cy.contains('Headlinesqwe');
+		cy.contains('Headlines');
 	});
 
 	it('copies link', () => {
