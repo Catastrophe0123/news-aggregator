@@ -5,36 +5,46 @@ name: deploy-gh-pages
 # Controls when the action will run. Triggers the workflow on push or pull request
 # events but only for the master branch
 on:
-  push:
-    branches: master
+    push:
+        branches: master
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
-  # This workflow contains a single job called "build"
-  build:
-    # The type of runner that the job will run on
-    runs-on: ubuntu-latest
-
-    # Steps represent a sequence of tasks that will be executed as part of the job
-    steps:
-      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
-      - uses: actions/checkout@v2
-      # Runs a single command using the runners shell
-      - name: set remote github
-        run:  git remote set-url origin https://${{ secrets.GITHUBTOKEN }}@github.com/Catastrophe0123/news-aggregator.git
-      - run: git config --global user.email "ci@githubaction.com"
-      - run: git config --global user.name "githubaction"
-      - name: Cypress run
-        uses: cypress-io/github-action@v1
-        with:
-          build: npm run build
-          start: npm start
-          wait-on: http://localhost:3000
-#       - name: install dependencies
-#         run: npm install
-      - name: run deploy script
-        continue-on-error: true
-        run: npm run deploy
-        env:
-          CI: false
-
+    # This workflow contains a single job called "build"
+    build:
+        # The type of runner that the job will run on
+        runs-on: ubuntu-latest
+        strategy:
+            matrix:
+                # the actual items in the array do not matter,
+                # just the number - to force CI to sping 3 copies
+                # of the current job in parallel
+                machines: [1, 2, 3]
+        # Steps represent a sequence of tasks that will be executed as part of the job
+        steps:
+            # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+            - uses: actions/checkout@v2
+            # Runs a single command using the runners shell
+            - name: set remote github
+              run: git remote set-url origin https://${{ secrets.GITHUBTOKEN }}@github.com/Catastrophe0123/news-aggregator.git
+            - run: git config --global user.email "ci@githubaction.com"
+            - run: git config --global user.name "githubaction"
+            - name: Cypress run
+              uses: cypress-io/github-action@v1
+              with:
+                  record: true
+                  parallel: true
+                  group: 'Actions example'
+                  build: npm run build
+                  start: npm start
+                  wait-on: http://localhost:3000
+                  env:
+                      # pass the Dashboard record key as an environment variable
+                      CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
+            #       - name: install dependencies
+            #         run: npm install
+            - name: run deploy script
+              continue-on-error: true
+              run: npm run deploy
+              env:
+                  CI: false

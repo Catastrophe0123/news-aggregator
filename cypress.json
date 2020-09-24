@@ -1,1 +1,4 @@
-{ "experimentalNetworkStubbing": true }
+{
+  "experimentalNetworkStubbing": true,
+  "projectId": "dd3qx8"
+}
