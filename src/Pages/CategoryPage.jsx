@@ -141,9 +141,9 @@ export class CategoryPage extends Component {
 	};
 
 	componentDidMount = async () => {
-		let paramString = this.props.location.search;
+		// let paramString = this.props.location.search;
 
-		let params = new URLSearchParams(paramString);
+		// let params = new URLSearchParams(paramString);
 
 		// switch (search) {
 		// 	case 'business':

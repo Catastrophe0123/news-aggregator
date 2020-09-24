@@ -1,0 +1,65 @@
+{
+	"data": {
+		"status": "ok",
+		"totalResults": 38,
+		"articles": [
+			{
+				"source": { "id": "engadget", "name": "Engadget" },
+				"author": "",
+				"title": "Seagate's 1TB Game Drive for Xbox Series X, Series S costs $220 - Engadget",
+				"description": "Xbox Series X and Series S require these 1TB Game Drive expansion cards to add storage for next-gen games, and to get one it will cost you $220.",
+				"url": "https://www.engadget.com/xbox-series-game-drive-1tb-220-053427485.html",
+				"urlToImage": "https://o.aolcdn.com/images/dims?resize=1200%2C630&crop=1200%2C630%2C0%2C0&quality=95&image_uri=https%3A%2F%2Fs.yimg.com%2Fos%2Fcreatr-uploaded-images%2F2020-09%2Fb7e39860-fe26-11ea-afbf-858eb6594fe7&client=amp-blogside-v2&signature=939d4c1cb1a3bc1b0e47453e4c7579492cde821b",
+				"publishedAt": "2020-09-24T05:34:35Z",
+				"content": "Ever since Microsoft announced the details of that Velocity Drive storage architecture in its new Xbox Series family, we knew it wouldn’t be cheap to add some extra storage for your new console. Now … [+1038 chars]",
+				"tags": [
+					"Engadget Xbox Series X",
+					"Xbox Series X",
+					"Series S costs",
+					"Game Drive expansion cards",
+					"Series S"
+				]
+			},
+			{
+				"source": { "id": "fox-news", "name": "Fox News" },
+				"author": "Angelica Stabile",
+				"title": "Donald Trump Jr. condemns 'anarchy' in Louisville after officers shot amid Breonna Taylor protests - Fox News",
+				"description": "Louisville, Ky., is the latest American city to see peaceful protests transform into violent riots and \"anarchy,\" Donald Trump Jr. said Wednesday during an appearance on “Hannity”",
+				"url": "https://www.foxnews.com/politics/breonna-taylor-donald-trump-jr-louisville-anarchy",
+				"urlToImage": "https://static.foxnews.com/foxnews.com/content/uploads/2020/02/Donald-Trump-Jr-REUTERS-1.jpg",
+				"publishedAt": "2020-09-24T04:28:26Z",
+				"content": "Louisville, Ky., is the latest American city to see peaceful protests transform into violent riots and \"anarchy,\" Donald Trump Jr. said Wednesday during an appearance on “Hannity”\r\n“There are peacefu… [+1695 chars]",
+				"tags": [
+					"Donald Trump",
+					"anarchy",
+					"Fox News Louisville",
+					"Breonna Taylor protests",
+					"Louisville",
+					"officers shot",
+					"protests",
+					"American city"
+				]
+			},
+			{
+				"source": { "id": "cnn", "name": "CNN" },
+				"author": "Gawon Bae, CNN",
+				"title": "South Korea official shot dead by North Korean troops after crossing border: Seoul - CNN",
+				"description": "A South Korean official was shot dead after crossing a maritime border into North Korea, Seoul said Thursday.",
+				"url": "https://www.cnn.com/2020/09/23/asia/north-korea-south-korea-intl-hnk/index.html",
+				"urlToImage": "https://cdn.cnn.com/cnnnext/dam/assets/200923231600-yeonpyeong-island-south-korea-restricted-super-tease.jpg",
+				"publishedAt": "2020-09-24T03:59:00Z",
+				"content": "Seoul (CNN)A South Korean official was shot dead after crossing a maritime border into North Korea, Seoul said Thursday. \r\nAccording to Lt. Gen. Ahn Young-ho, a top official with South Korea's Joint … [+1914 chars]",
+				"tags": [
+					"shot",
+					"North Korean troops",
+					"border",
+					"Seoul",
+					"South Korea",
+					"South Korean",
+					"North Korea"
+				]
+			}
+		]
+	},
+	"bookmarks": []
+}
