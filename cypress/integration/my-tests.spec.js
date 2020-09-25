@@ -60,7 +60,7 @@ describe('working with cypress', () => {
 	});
 
 	it('goes to headlines', () => {
-		cy.contains('News Aggregator').click();
+		cy.contains('News Aggregatore').click();
 
 		cy.url().should('equal', 'http://localhost:3000/headlines');
 	});
