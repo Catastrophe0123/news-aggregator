@@ -43,7 +43,6 @@ jobs:
             #       - name: install dependencies
             #         run: npm install
             - name: run deploy script
-              continue-on-error: true
               run: yarn deploy
               env:
                   CI: false
