@@ -35,8 +35,8 @@ jobs:
                   record: true
                   parallel: true
                   group: 'Actions example'
-                  build: npm run build
-                  start: npm start
+                  build: yarn build
+                  start: yarn start
                   wait-on: http://localhost:3000
               env:
                   CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
@@ -44,6 +44,6 @@ jobs:
             #         run: npm install
             - name: run deploy script
               continue-on-error: true
-              run: npm run deploy
+              run: yarn deploy
               env:
                   CI: false
