@@ -17,12 +17,12 @@ jobs:
     build:
         # The type of runner that the job will run on
         runs-on: ubuntu-latest
-        strategy:
-            matrix:
-                # the actual items in the array do not matter,
-                # just the number - to force CI to sping 3 copies
-                # of the current job in parallel
-                machines: [1, 2, 3]
+        # strategy:
+        #     matrix:
+        #         # the actual items in the array do not matter,
+        #         # just the number - to force CI to sping 3 copies
+        #         # of the current job in parallel
+        #         machines: [1, 2, 3]
         # Steps represent a sequence of tasks that will be executed as part of the job
         steps:
             # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
@@ -30,10 +30,11 @@ jobs:
             - name: Cypress run
               uses: cypress-io/github-action@v1
               with:
-                  record: true
-                  parallel: true
-                  group: 'Actions example'
+                  #   record: true
+                  #   parallel: true
+                  #   group: 'Actions example'
                   start: yarn start
+                  build: yarn build:css
                   wait-on: http://localhost:3000
               env:
                   # pass the Dashboard record key as an environment variable
