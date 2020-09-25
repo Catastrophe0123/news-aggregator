@@ -6,19 +6,19 @@
     "runtime-main.js": "/news-aggregator/static/js/runtime-main.02924361.js",
     "runtime-main.js.map": "/news-aggregator/static/js/runtime-main.02924361.js.map",
     "static/css/2.0e6e67bd.chunk.css": "/news-aggregator/static/css/2.0e6e67bd.chunk.css",
-    "static/js/2.327c7d0d.chunk.js": "/news-aggregator/static/js/2.327c7d0d.chunk.js",
-    "static/js/2.327c7d0d.chunk.js.map": "/news-aggregator/static/js/2.327c7d0d.chunk.js.map",
+    "static/js/2.32d2b64a.chunk.js": "/news-aggregator/static/js/2.32d2b64a.chunk.js",
+    "static/js/2.32d2b64a.chunk.js.map": "/news-aggregator/static/js/2.32d2b64a.chunk.js.map",
     "index.html": "/news-aggregator/index.html",
-    "precache-manifest.ac72b59a0b1f791c08e00c3844ca27b3.js": "/news-aggregator/precache-manifest.ac72b59a0b1f791c08e00c3844ca27b3.js",
+    "precache-manifest.813388bf4c7af41bb459ba2efb600cc3.js": "/news-aggregator/precache-manifest.813388bf4c7af41bb459ba2efb600cc3.js",
     "service-worker.js": "/news-aggregator/service-worker.js",
     "static/css/2.0e6e67bd.chunk.css.map": "/news-aggregator/static/css/2.0e6e67bd.chunk.css.map",
     "static/css/main.cca3f482.chunk.css.map": "/news-aggregator/static/css/main.cca3f482.chunk.css.map",
-    "static/js/2.327c7d0d.chunk.js.LICENSE.txt": "/news-aggregator/static/js/2.327c7d0d.chunk.js.LICENSE.txt"
+    "static/js/2.32d2b64a.chunk.js.LICENSE.txt": "/news-aggregator/static/js/2.32d2b64a.chunk.js.LICENSE.txt"
   },
   "entrypoints": [
     "static/js/runtime-main.02924361.js",
     "static/css/2.0e6e67bd.chunk.css",
-    "static/js/2.327c7d0d.chunk.js",
+    "static/js/2.32d2b64a.chunk.js",
     "static/css/main.cca3f482.chunk.css",
     "static/js/main.4039783e.chunk.js"
   ]
