@@ -8,8 +8,8 @@ on:
     pull_request:
         branches: master
 
-env:
-    CI: false
+# env:
+#     CI: false
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
@@ -25,10 +25,12 @@ jobs:
         #         machines: [1, 2, 3]
         # Steps represent a sequence of tasks that will be executed as part of the job
         steps:
+            - name: set env variables
+              run: echo "{CI}={false}" >> $GITHUB_ENV
             # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
             - uses: actions/checkout@v2
             - name: Cypress run
-              uses: cypress-io/github-action@v1
+              uses: cypress-io/github-action@v2
               with:
                   #   record: true
                   #   parallel: true

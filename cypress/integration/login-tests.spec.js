@@ -44,9 +44,8 @@ describe('login stuff', { retries: 2 }, () => {
 		cy.get('form > :nth-child(1) > .px-3').clear().type('qwe@gmail.com');
 
 		cy.get('form > :nth-child(2) > .px-3').clear().type('qwe');
-		
-		cy.get('.bg-gray-900').click().;
-		cy.window().then((win) => {});
+
+		cy.get('.bg-gray-900').click();
 		cy.contains('password must be atleast 4 letters long');
 	});
 
