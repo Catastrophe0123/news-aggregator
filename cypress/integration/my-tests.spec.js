@@ -6,7 +6,7 @@ Cypress.on('uncaught:exception', (err, runnable) => {
 	return false;
 });
 
-describe('working with cypress', () => {
+describe('working with cypress', { retries: 2 }, () => {
 	beforeEach('visit the server', () => {
 		cy.server();
 

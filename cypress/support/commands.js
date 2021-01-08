@@ -16,6 +16,22 @@ Cypress.Commands.add('openSidebar', () => {
 	cy.get('.flex.items-center > .cursor-pointer').click();
 });
 
+Cypress.Commands.add('login', () => {
+	cy.get('.border > .fas').click();
+
+	cy.get('.Modal').should('exist');
+
+	cy.get('form > :nth-child(1) > .px-3').clear().type('qwerty@gmail.com');
+
+	cy.get('form > :nth-child(2) > .px-3').clear().type('qwerty');
+
+	cy.get('.bg-gray-900').click();
+
+	cy.get('.Modal').should('not.exist');
+	// cy.get("qdwqw").should("be.visible")
+	cy.get('.h-16 > :nth-child(3) > .border').contains('QW');
+});
+
 //
 // -- This is a child command --
 // Cypress.Commands.add("drag", { prevSubject: 'element'}, (subject, options) => { ... })
