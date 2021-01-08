@@ -1,0 +1,69 @@
+{
+	"beforeEach": {
+		"name": "visit the server"
+	},
+	"tests": {
+		"run": [
+			{
+				"name": "login",
+				"perform": [
+					{
+						"selector": ".border > .fas",
+						"action": [
+							"click",
+							{
+								"type": ["hello world"]
+							}
+						]
+					},
+					{
+						"selector": ".Modal",
+						"action": [
+							{
+								"should": ["exist"]
+							}
+						]
+					},
+					{
+						"selector": "form > :nth-child(1) > .px-3",
+						"action": [
+							"clear",
+							{
+								"type": ["qwerty@gmail.com"]
+							}
+						]
+					},
+					{
+						"selector": "form > :nth-child(2) > .px-3",
+						"action": [
+							"clear",
+							{
+								"type": ["qwerty"]
+							}
+						]
+					},
+					{
+						"selector": ".bg-gray-900",
+						"action": ["click"]
+					},
+					{
+						"selector": ".Modal",
+						"action": [
+							{
+								"should": ["not.exist"]
+							}
+						]
+					},
+					{
+						"selector": ".h-16 > :nth-child(3) > .border",
+						"action": [
+							{
+								"contains": ["QW"]
+							}
+						]
+					}
+				]
+			}
+		]
+	}
+}
